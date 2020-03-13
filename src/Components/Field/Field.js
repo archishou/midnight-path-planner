@@ -4,7 +4,7 @@ import field from "./resources/skystone_field.jpg";
 
 export default class Field extends Component {
     fieldDivStyle = {
-        border: '1px solid black',
+        border: '1px solid red',
         float: 'left',
         width : '50%',
     };
