@@ -1,11 +1,11 @@
 import React from 'react';
-import Clock from './Components/Field.js'
+import Field from './Components/Field/Field.js'
 import './App.css';
 
 function App() {
   return (
       <div>
-      <Clock />
+      <Field />
       </div>
   );
 }
