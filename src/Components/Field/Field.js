@@ -1,44 +1,37 @@
-import React from "react";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import {Rectangle} from 'draw-shape-reactjs';
-import './Field.css';
-class Field extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {date: new Date()};
-    }
+import React, { Component } from "react";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import field from "./resources/skystone_field.jpg";
 
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(),
-            1000
-        );
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
-
-    tick() {
-        this.setState({
-            date: new Date()
-        });
-    }
+export default class Field extends Component {
+    fieldDivStyle = {
+        border: '1px solid black',
+        float: 'left',
+        width : '50%',
+    };
 
     render() {
         return (
-            <TransformWrapper
-                defaultScale={1}
-                defaultPositionX={200}
-                defaultPositionY={100}
-                velocity={false}
-            >
-                <TransformComponent>
-                    <img src="./resources/skystone_field.jpg" />
-                    <div>Example text</div>
-                </TransformComponent>
-            </TransformWrapper>
+            <div
+                style={this.fieldDivStyle}>
+                <TransformWrapper
+                    defaultScale={1}
+                    defaultPositionX={0}
+                    defaultPositionY={0}
+
+                    pan={{
+                        velocity: false
+                    }}
+                    options={{
+                        limitToWrapper: false,
+                        limitToBounds: false,
+                    }}
+
+                >
+                    <TransformComponent>
+                        <img src={field} />
+                    </TransformComponent>
+                </TransformWrapper>
+            </div>
         );
     }
 }
-export default Field;
