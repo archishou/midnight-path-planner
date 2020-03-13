@@ -1,5 +1,8 @@
 import React from "react";
-
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import {
+    Rectangle
+} from 'draw-shape-reactjs';
 class Clock extends React.Component {
     constructor(props) {
         super(props);
@@ -25,10 +28,11 @@ class Clock extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Hello, world!</h1>
-                <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-            </div>
+            <TransformWrapper>
+                <TransformComponent>
+                    <img src="image.jpg" alt="test" />
+                </TransformComponent>
+            </TransformWrapper>
         );
     }
 }
