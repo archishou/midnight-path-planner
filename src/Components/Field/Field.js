@@ -28,7 +28,8 @@ export default class Field extends React.Component {
     };
 
     initScale = 0.4;
-
+    fieldWidth = 2675;
+    fieldHeight = 2665;
     rotate(){
         let newRotation = this.state.rotation + 90;
         if(newRotation >= 360){
@@ -40,13 +41,13 @@ export default class Field extends React.Component {
     }
 
     render() {
-        const { rotation } =  this.state;
+        const { rotation } = this.state;
         return (
             <div style={this.fieldViewPort}>
                 <TransformWrapper
                     defaultScale={this.initScale}
-                    defaultPositionX={500}
-                    defaultPositionY={500}
+                    defaultPositionX={0}
+                    defaultPositionY={0}
 
                     pan={{
                         velocity: false
@@ -60,7 +61,7 @@ export default class Field extends React.Component {
                 >
                     <TransformComponent>
                         <div style={this.fieldDivStyle}>
-                            <img src={field_img} onClick={this.rotate}/>
+                            <img src={field_img} onClick={this.rotate} style={{transform: `rotate(${rotation}deg)`}}/>
                         </div>
                     </TransformComponent>
                 </TransformWrapper>

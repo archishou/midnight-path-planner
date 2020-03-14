@@ -3,9 +3,11 @@ import Field from './Components/Field/Field.js'
 import './App.css';
 
 function App() {
+
   return (
-      <div>
-      <Field />
+
+      <div id={"field-viewport"}>
+        <Field />
       </div>
   );
 }
