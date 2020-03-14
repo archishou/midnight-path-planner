@@ -14,13 +14,6 @@ export default class Field extends React.Component {
         this.rotate = this.rotate.bind(this);
     }
 
-    fieldViewPort = {
-        width: '100vh',
-        height: '100vh',
-        border: '3px solid black',
-        float: 'left',
-        backgroundColor: 'black',
-    };
     fieldDivStyle = {
         width: '100vh',
         height: '100vh',
@@ -43,29 +36,27 @@ export default class Field extends React.Component {
     render() {
         const { rotation } = this.state;
         return (
-            <div style={this.fieldViewPort}>
-                <TransformWrapper
-                    defaultScale={this.initScale}
-                    defaultPositionX={0}
-                    defaultPositionY={0}
+            <TransformWrapper
+                defaultScale={this.initScale}
+                defaultPositionX={0}
+                defaultPositionY={0}
 
-                    pan={{
-                        velocity: false
-                    }}
-                    options={{
-                        limitToWrapper: false,
-                        limitToBounds: false,
-                        minScale: this.initScale,
-                        maxScale: 10,
-                    }}
-                >
-                    <TransformComponent>
-                        <div style={this.fieldDivStyle}>
-                            <img src={field_img} onClick={this.rotate} style={{transform: `rotate(${rotation}deg)`}}/>
-                        </div>
-                    </TransformComponent>
-                </TransformWrapper>
-            </div>
+                pan={{
+                    velocity: false
+                }}
+                options={{
+                    limitToWrapper: false,
+                    limitToBounds: false,
+                    minScale: this.initScale,
+                    maxScale: 10,
+                }}
+            >
+                <TransformComponent>
+                    <div style={this.fieldDivStyle}>
+                        <img src={field_img} onClick={this.rotate} style={{transform: `rotate(${rotation}deg)`}}/>
+                    </div>
+                </TransformComponent>
+            </TransformWrapper>
         );
     }
 }
