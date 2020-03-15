@@ -1,7 +1,7 @@
 import React from 'react';
-import Field from './Components/Field/Field.js'
-import fieldViewHeight from './Components/Field/Field.js'
-import fieldViewWidth from './Components/Field/Field.js'
+import Field from '../Field/Field.js'
+import fieldViewHeight from '../Field/Field.js'
+import fieldViewWidth from '../Field/Field.js'
 import './App.css';
 import M from 'materialize-css';
 
