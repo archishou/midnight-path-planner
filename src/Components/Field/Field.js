@@ -2,8 +2,8 @@ import React from 'react';
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import './Field.css'
 import field_img from './resources/skystone_field.jpg'
-
-
+const fieldViewHeight = '90vh';
+const fieldViewWidth = '50vw';
 export default class Field extends React.Component {
     constructor(props){
         super(props);
@@ -15,8 +15,8 @@ export default class Field extends React.Component {
     }
 
     fieldDivStyle = {
-        width: '100vh',
-        height: '100vh',
+        width: fieldViewWidth,
+        height: fieldViewHeight,
         float: 'left'
     };
 
