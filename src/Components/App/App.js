@@ -3,7 +3,6 @@ import Field from '../Field/Field.js'
 import fieldViewHeight from '../Field/Field.js'
 import fieldViewWidth from '../Field/Field.js'
 import './App.css';
-import M from 'materialize-css';
 
 const fieldViewPort = {
     width: fieldViewWidth,

@@ -2,17 +2,78 @@ import React from 'react';
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import './Field.css'
 import field_img from './resources/skystone_field.jpg'
+import Immutable from "immutable";
 const fieldViewHeight = '90vh';
 const fieldViewWidth = '50vw';
+
+const DrawingLine = (props) => {
+    const pathData = "M " + props.line
+        .map(p => {
+            return `${p.get('x')} ${p.get('y')}`
+        })
+        .join(" L ");
+    console.log("in DrawingLine", pathData);
+    return <path className="path" d={pathData} />;
+};
+
 export default class Field extends React.Component {
-    constructor(props){
+
+    constructor(props) {
         super(props);
         this.state = {
-            rotation: 0
+            isDrawing: false,
+            lines: new Immutable.List()
         };
-
-        this.rotate = this.rotate.bind(this);
+        this.handleMouseDown = this.handleMouseDown.bind(this);
+        this.handleMouseMove = this.handleMouseMove.bind(this);
     }
+
+    state = {
+        isDrawing: false,
+        lines: new Immutable.List()
+    };
+
+    relativeCoordinatesForEvent(event) {
+        const boundingRect = this.refs.drawArea.getBoundingClientRect();
+
+        return new Immutable.Map({
+            x: event.clientX - boundingRect.left,
+            y: event.clientY - boundingRect.top,
+        });
+    }
+    handleMouseDown = (event) => {
+        if (event.button !== 0) return;
+        const point = this.relativeCoordinatesForEvent(event);
+        this.setState(prevState => {
+            return {
+                lines: prevState.lines.push(new Immutable.List([point])),
+                isDrawing: true,
+            }
+        })
+    };
+
+    handleMouseMove = (event) => {
+        if (!this.state.isDrawing) {
+            return;
+        }
+        const point = this.relativeCoordinatesForEvent(event);
+        this.setState(prevState =>  ({
+            lines: prevState.lines.updateIn([prevState.lines.size - 1], line => line.push(point))
+        }));
+    };
+
+
+    Drawing = (props) => {
+        return(
+            <svg className="drawing">
+                {props.lines.map((line, index) => (
+                    <DrawingLine key={index} line={line} />
+                ))}
+            </svg>
+        )
+    };
+
+
 
     fieldDivStyle = {
         width: fieldViewWidth,
@@ -21,20 +82,8 @@ export default class Field extends React.Component {
     };
 
     initScale = 0.4;
-    fieldWidth = 2675;
-    fieldHeight = 2665;
-    rotate(){
-        let newRotation = this.state.rotation + 90;
-        if(newRotation >= 360){
-            newRotation =- 360;
-        }
-        this.setState({
-            rotation: newRotation,
-        })
-    }
 
     render() {
-        const { rotation } = this.state;
         return (
             <TransformWrapper
                 defaultScale={this.initScale}
@@ -52,8 +101,8 @@ export default class Field extends React.Component {
                 }}
             >
                 <TransformComponent>
-                    <div style={this.fieldDivStyle}>
-                        <img src={field_img} onClick={this.rotate} style={{transform: `rotate(${rotation}deg)`}}/>
+                    <div style={this.fieldDivStyle} onMouseDown={this.handleMouseDown} onMouseMove={this.handleMouseMove}>
+                        <img src={field_img}/>
                     </div>
                 </TransformComponent>
             </TransformWrapper>
