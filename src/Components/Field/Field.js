@@ -7,14 +7,18 @@ import Immutable from "immutable";
 
 export default class Field extends React.Component {
 
-    fieldDivStyle = {
+    viewPortStyle = {
         width: '50vw',
-        height: '90vh',
+        height: '100vh',
         float: 'left',
-        border: '3px solid red',
     };
 
-    initScale = 0.4;
+    contentDiv = {
+        float: 'left',
+        border: '10px solid red',
+    };
+
+    initScale = 0.2;
 
     render() {
         return (
@@ -34,8 +38,10 @@ export default class Field extends React.Component {
                 }}
             >
                 <TransformComponent>
-                    <div style={this.fieldDivStyle} >
-                        <img src={field_img}/>
+                    <div style={this.viewPortStyle} >
+                        <div style={this.contentDiv} >
+                            <img src={field_img}/>
+                        </div>
                     </div>
                 </TransformComponent>
             </TransformWrapper>

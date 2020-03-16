@@ -3,9 +3,8 @@ import Field from '../Field/Field.js'
 import './App.css';
 
 const fieldViewPort = {
-    width: '50%',
-    height: '100%',
-    border: '10px solid red',
+    width: '50vw',
+    height: '100vh',
     float: 'left',
     backgroundColor: 'black',
 };
