@@ -25,7 +25,6 @@ export default class Field extends React.Component {
             lines: new Immutable.List()
         };
         this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleMouseMove = this.handleMouseMove.bind(this);
     }
 
     state = {
@@ -33,12 +32,18 @@ export default class Field extends React.Component {
         lines: new Immutable.List()
     };
 
-    relativeCoordinatesForEvent(event) {
-        const boundingRect = this.refs.drawArea.getBoundingClientRect();
+    fieldDivStyle = {
+        width: fieldViewWidth,
+        height: fieldViewHeight,
+        float: 'left'
+    };
 
+    initScale = 0.4;
+
+    relativeCoordinatesForEvent(event) {
         return new Immutable.Map({
-            x: event.clientX - boundingRect.left,
-            y: event.clientY - boundingRect.top,
+            x: event.clientX ,
+            y: event.clientY ,
         });
     }
     handleMouseDown = (event) => {
@@ -51,37 +56,6 @@ export default class Field extends React.Component {
             }
         })
     };
-
-    handleMouseMove = (event) => {
-        if (!this.state.isDrawing) {
-            return;
-        }
-        const point = this.relativeCoordinatesForEvent(event);
-        this.setState(prevState =>  ({
-            lines: prevState.lines.updateIn([prevState.lines.size - 1], line => line.push(point))
-        }));
-    };
-
-
-    Drawing = (props) => {
-        return(
-            <svg className="drawing">
-                {props.lines.map((line, index) => (
-                    <DrawingLine key={index} line={line} />
-                ))}
-            </svg>
-        )
-    };
-
-
-
-    fieldDivStyle = {
-        width: fieldViewWidth,
-        height: fieldViewHeight,
-        float: 'left'
-    };
-
-    initScale = 0.4;
 
     render() {
         return (
@@ -101,8 +75,13 @@ export default class Field extends React.Component {
                 }}
             >
                 <TransformComponent>
-                    <div style={this.fieldDivStyle} onMouseDown={this.handleMouseDown} onMouseMove={this.handleMouseMove}>
+                    <div style={this.fieldDivStyle} onMouseDown={this.handleMouseDown}>
                         <img src={field_img}/>
+                        <svg className="drawing">
+                            {this.state.lines.map((line, index) => (
+                                <DrawingLine key={index} line={line} />
+                            ))}
+                        </svg>
                     </div>
                 </TransformComponent>
             </TransformWrapper>
