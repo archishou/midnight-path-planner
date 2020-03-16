@@ -7,6 +7,19 @@ import Immutable from "immutable";
 
 export default class Field extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            lines: new Immutable.List(),
+            isDrawing: false
+        };
+
+        this.handleMouseDown = this.handleMouseDown.bind(this);
+        this.handleMouseMove = this.handleMouseMove.bind(this);
+        this.handleMouseUp = this.handleMouseUp.bind(this);
+    }
+
+
     viewPortStyle = {
         width: '50vw',
         height: '100vh',
@@ -19,6 +32,53 @@ export default class Field extends React.Component {
     };
 
     initScale = 0.2;
+
+    componentDidMount() {
+        document.addEventListener("mouseup", this.handleMouseUp);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("mouseup", this.handleMouseUp);
+    }
+
+    handleMouseDown(mouseEvent) {
+        if (mouseEvent.button != 0) {
+            return;
+        }
+
+        const point = this.relativeCoordinatesForEvent(mouseEvent);
+
+        this.setState(prevState => ({
+            lines: prevState.lines.push(new Immutable.List([point])),
+            isDrawing: true
+        }));
+    }
+
+    handleMouseMove(mouseEvent) {
+        if (!this.state.isDrawing) {
+            return;
+        }
+
+        const point = this.relativeCoordinatesForEvent(mouseEvent);
+
+        this.setState(prevState =>  ({
+            lines: prevState.lines.updateIn([prevState.lines.size - 1], line => line.push(point))
+        }));
+    }
+
+    handleMouseUp() {
+        this.setState({ isDrawing: false });
+    }
+
+    relativeCoordinatesForEvent(mouseEvent) {
+        //const boundingRect = this.refs.drawArea.getBoundingClientRect();
+        return new Immutable.Map({
+            x: mouseEvent.clientX,
+            y: mouseEvent.clientY,
+        });
+    }
+
+
 
     render() {
         return (
@@ -41,6 +101,7 @@ export default class Field extends React.Component {
                     <div style={this.viewPortStyle} >
                         <div style={this.contentDiv} >
                             <img src={field_img}/>
+                            <Drawing lines={this.state.lines} />
                         </div>
                     </div>
                 </TransformComponent>
@@ -48,71 +109,6 @@ export default class Field extends React.Component {
         );
     }
 }
-
-/*
- <Drawing lines={this.state.lines} />
-
-
-
-constructor(props) {
-    super(props);
-    this.state = {
-        lines: new Immutable.List(),
-        isDrawing: false
-    };
-
-    this.handleMouseDown = this.handleMouseDown.bind(this);
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    this.handleMouseUp = this.handleMouseUp.bind(this);
-}
-
-initScale = 0.4;
-
-componentDidMount() {
-    document.addEventListener("mouseup", this.handleMouseUp);
-}
-
-componentWillUnmount() {
-    document.removeEventListener("mouseup", this.handleMouseUp);
-}
-
-handleMouseDown(mouseEvent) {
-    if (mouseEvent.button != 0) {
-        return;
-    }
-
-    const point = this.relativeCoordinatesForEvent(mouseEvent);
-
-    this.setState(prevState => ({
-        lines: prevState.lines.push(new Immutable.List([point])),
-        isDrawing: true
-    }));
-}
-
-handleMouseMove(mouseEvent) {
-    if (!this.state.isDrawing) {
-        return;
-    }
-
-    const point = this.relativeCoordinatesForEvent(mouseEvent);
-
-    this.setState(prevState =>  ({
-        lines: prevState.lines.updateIn([prevState.lines.size - 1], line => line.push(point))
-    }));
-}
-
-handleMouseUp() {
-    this.setState({ isDrawing: false });
-}
-
-relativeCoordinatesForEvent(mouseEvent) {
-    //const boundingRect = this.refs.drawArea.getBoundingClientRect();
-    return new Immutable.Map({
-        x: mouseEvent.clientX,
-        y: mouseEvent.clientY,
-    });
-}
-
 
 function Drawing({ lines }) {
     return (
@@ -134,4 +130,3 @@ function DrawingLine({ line }) {
 
     return <path className="path" d={pathData} />;
 }
- */

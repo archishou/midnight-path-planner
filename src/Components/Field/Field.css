@@ -1,0 +1,8 @@
+
+.path {
+    fill: none;
+    stroke-width: 10px;
+    stroke: white;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
