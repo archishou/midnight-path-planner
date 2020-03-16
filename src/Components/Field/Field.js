@@ -1,15 +1,17 @@
 import React from 'react';
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import './Field.css'
-import field_img from './resources/skystone_field.jpg'
 import Immutable from "immutable";
+import Konva from 'konva';
+
+import { Stage, Layer, Rect, Text, Circle, Line } from 'react-konva';
+
 
 
 export default class Field extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lines: new Immutable.List(),
+            waypoints: new Immutable.List(),
             isDrawing: false
         };
 
@@ -34,7 +36,7 @@ export default class Field extends React.Component {
         const point = this.relativeCoordinatesForEvent(mouseEvent);
 
         this.setState(prevState => ({
-            lines: prevState.lines.push(new Immutable.List([point])),
+            waypoints: prevState.waypoints.push(new Immutable.List([point])),
             isDrawing: true
         }));
     }
@@ -47,7 +49,7 @@ export default class Field extends React.Component {
         const point = this.relativeCoordinatesForEvent(mouseEvent);
 
         this.setState(prevState =>  ({
-            lines: prevState.lines.updateIn([prevState.lines.size - 1], line => line.push(point))
+            waypoints: prevState.waypoints.updateIn([prevState.waypoints.size - 1], line => line.push(point))
         }));
     }
 
@@ -71,7 +73,7 @@ export default class Field extends React.Component {
                 onMouseDown={this.handleMouseDown}
                 onMouseMove={this.handleMouseMove}
             >
-                <Drawing lines={this.state.lines} />
+                <Drawing lines={this.state.waypoints} />
             </div>
         );
     }

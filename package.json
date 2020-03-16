@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "draw-shape-reactjs": "^1.0.2",
     "immutable": "^4.0.0-rc.12",
+    "konva": "^4.2.0",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
