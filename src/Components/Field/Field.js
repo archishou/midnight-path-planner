@@ -16,7 +16,6 @@ export default class Field extends React.Component {
         };
 
         this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
     }
 
@@ -39,14 +38,6 @@ export default class Field extends React.Component {
             waypoints: prevState.waypoints.push(new Immutable.List([point])),
             isDrawing: true
         }));
-    }
-
-    handleMouseMove(mouseEvent) {
-        if (!this.state.isDrawing) {
-            return;
-        }
-
-        const point = this.relativeCoordinatesForEvent(mouseEvent);
 
         this.setState(prevState =>  ({
             waypoints: prevState.waypoints.updateIn([prevState.waypoints.size - 1], line => line.push(point))
@@ -71,7 +62,6 @@ export default class Field extends React.Component {
                 className="drawArea"
                 ref="drawArea"
                 onMouseDown={this.handleMouseDown}
-                onMouseMove={this.handleMouseMove}
             >
                 <Drawing lines={this.state.waypoints} />
             </div>
@@ -82,7 +72,8 @@ export default class Field extends React.Component {
 function Drawing({ lines }) {
     return (
         <svg className="drawing">
-            {lines.map((line, index) => (
+            {
+                lines.map((line, index) => (
                 <DrawingLine key={index} line={line} />
             ))}
         </svg>

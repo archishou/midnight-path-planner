@@ -1,10 +1,10 @@
 
 .drawArea {
     width: 50vw;
-    height: 99vh;
-    border: 1px solid black;
+    height: 100vh;
     float: left;
     cursor: crosshair;
+    background-color: black;
     background-image: url('resources/field.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
