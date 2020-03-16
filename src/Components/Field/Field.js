@@ -6,7 +6,6 @@ import Immutable from "immutable";
 
 
 export default class Field extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -18,20 +17,6 @@ export default class Field extends React.Component {
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
     }
-
-
-    viewPortStyle = {
-        width: '50vw',
-        height: '100vh',
-        float: 'left',
-    };
-
-    contentDiv = {
-        float: 'left',
-        border: '10px solid red',
-    };
-
-    initScale = 0.2;
 
     componentDidMount() {
         document.addEventListener("mouseup", this.handleMouseUp);
@@ -71,41 +56,23 @@ export default class Field extends React.Component {
     }
 
     relativeCoordinatesForEvent(mouseEvent) {
-        //const boundingRect = this.refs.drawArea.getBoundingClientRect();
+        const boundingRect = this.refs.drawArea.getBoundingClientRect();
         return new Immutable.Map({
-            x: mouseEvent.clientX,
-            y: mouseEvent.clientY,
+            x: mouseEvent.clientX - boundingRect.left,
+            y: mouseEvent.clientY - boundingRect.top,
         });
     }
 
-
-
     render() {
         return (
-            <TransformWrapper
-                defaultScale={this.initScale}
-                defaultPositionX={0}
-                defaultPositionY={0}
-
-                pan={{
-                    velocity: false
-                }}
-                options={{
-                    limitToWrapper: false,
-                    limitToBounds: false,
-                    minScale: this.initScale,
-                    maxScale: 10,
-                }}
+            <div
+                className="drawArea"
+                ref="drawArea"
+                onMouseDown={this.handleMouseDown}
+                onMouseMove={this.handleMouseMove}
             >
-                <TransformComponent>
-                    <div style={this.viewPortStyle} >
-                        <div style={this.contentDiv} >
-                            <img src={field_img}/>
-                            <Drawing lines={this.state.lines} />
-                        </div>
-                    </div>
-                </TransformComponent>
-            </TransformWrapper>
+                <Drawing lines={this.state.lines} />
+            </div>
         );
     }
 }
