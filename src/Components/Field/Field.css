@@ -5,7 +5,7 @@
     float: left;
     cursor: crosshair;
     background-color: black;
-    background-image: url('resources/field-2.png');
+    background-image: url('resources/field.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
@@ -16,7 +16,7 @@
     float: left;
     cursor: crosshair;
     background-color: white;
-    background-image: url('resources/field-2.png');
+    background-image: url('resources/field.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }

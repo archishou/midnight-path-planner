@@ -9,6 +9,9 @@ export default class Field extends React.Component {
             waypoints: new Immutable.List(),
             isDrawing: false,
             hover: false,
+            previousPointX:'',
+            previousPointY:'',
+            initalWaypointDrawn: false,
         };
 
         this.handleMouseDown = this.handleMouseDown.bind(this);
