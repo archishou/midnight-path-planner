@@ -40,11 +40,6 @@ class ColoredRect extends React.Component {
     }
 }
 
-const LionImage = () => {
-    const [image] = useImage('https://konvajs.org/assets/lion.png');
-    return <Image image={"resources/field.png"} />;
-};
-
 export default class Field extends React.Component {
     constructor(props) {
         super(props);
@@ -61,7 +56,7 @@ export default class Field extends React.Component {
         if(this.state.isDrawing) {
             this.setState({
                 isDrawing: !this.state.isDrawing,
-            })
+            });
             return;
         }
 
@@ -79,7 +74,7 @@ export default class Field extends React.Component {
             isDrawing: true,
             shapes: newShapes,
         })
-    }
+    };
 
     handleMouseMove= (e) => {
         if (!this.state.isDrawingMode) return;
@@ -101,13 +96,13 @@ export default class Field extends React.Component {
                 y: currShape.y,
                 width: newWidth,  // new width and height
                 height: newHeight
-            }
+            };
 
             this.setState({
                 shapes: newShapesList,
             });
         }
-    }
+    };
 
     render() {
 
@@ -118,7 +113,6 @@ export default class Field extends React.Component {
                        onContentMouseMove={this.handleMouseMove}
                 >
                     <Layer ref='layer'>
-                        <LionImage/>
                         {
                             this.state.shapes.map(shape => {
                             return (
