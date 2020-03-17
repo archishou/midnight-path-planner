@@ -1,22 +1,19 @@
 import React from 'react';
 import './Field.css'
 import Immutable from "immutable";
-import Konva from 'konva';
-
-import { Stage, Layer, Rect, Text, Circle, Line } from 'react-konva';
-
-
 
 export default class Field extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             waypoints: new Immutable.List(),
-            isDrawing: false
+            isDrawing: false,
+            hover: false,
         };
 
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
+        this.toggleHover = this.toggleHover.bind(this)
     }
 
     componentDidMount() {
@@ -48,6 +45,10 @@ export default class Field extends React.Component {
         this.setState({ isDrawing: false });
     }
 
+    toggleHover() {
+        this.setState({hover: !this.state.hover})
+    }
+
     relativeCoordinatesForEvent(mouseEvent) {
         const boundingRect = this.refs.drawArea.getBoundingClientRect();
         return new Immutable.Map({
@@ -57,30 +58,35 @@ export default class Field extends React.Component {
     }
 
     render() {
+        let hover;
+        if (this.state.hover) {
+            hover = 'hover'
+        } else {
+            hover = 'no-hover'
+        }
         return (
             <div
-                className="drawArea"
+                className={`draw-area-${hover}`}
                 ref="drawArea"
                 onMouseDown={this.handleMouseDown}
             >
-                <Drawing lines={this.state.waypoints} />
+                <svg className="drawing"
+                     >{
+                        this.state.waypoints.map((line, index) => (
+                            <DrawingLine
+                                key={index}
+                                line={line}
+                                enter={this.toggleHover}
+                                leave={this.toggleHover}
+                            />
+                        ))}
+                </svg>
             </div>
         );
     }
 }
 
-function Drawing({ lines }) {
-    return (
-        <svg className="drawing">
-            {
-                lines.map((line, index) => (
-                <DrawingLine key={index} line={line} />
-            ))}
-        </svg>
-    );
-}
-
-function DrawingLine({ line }) {
+function DrawingLine({ line , enter, leave}) {
     const pathData = "M " +
         line
             .map(p => {
@@ -88,5 +94,5 @@ function DrawingLine({ line }) {
             })
             .join(" L ");
 
-    return <path className="path" d={pathData} />;
+    return <path className="path" d={pathData} onMouseLeave={leave} onMouseEnter={enter}/>;
 }
