@@ -9,14 +9,17 @@ export default class Field extends React.Component {
             waypoints: new Immutable.List(),
             isDrawing: false,
             hover: false,
-            previousPointX:'',
-            previousPointY:'',
+            previousMouseX: 0,
+            previousMouseY: 0,
+            previousWayPointX: 0,
+            previousWayPointY: 0,
             initalWaypointDrawn: false,
         };
 
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
-        this.toggleHover = this.toggleHover.bind(this)
+        this.handleMouseMove = this.handleMouseMove(this);
+        this.toggleHover = this.toggleHover.bind(this);
     }
 
     componentDidMount() {
@@ -28,11 +31,15 @@ export default class Field extends React.Component {
     }
 
     handleMouseDown(mouseEvent) {
-        if (mouseEvent.button != 0) {
-            return;
-        }
+        if (mouseEvent.button !== 0) return
 
         const point = this.relativeCoordinatesForEvent(mouseEvent);
+
+        if (this.state.initalWaypointDrawn === false) {
+            this.setState(({
+                initalWaypointDrawn: true,
+            }));
+        }
 
         this.setState(prevState => ({
             waypoints: prevState.waypoints.push(new Immutable.List([point])),
@@ -40,8 +47,29 @@ export default class Field extends React.Component {
         }));
 
         this.setState(prevState =>  ({
-            waypoints: prevState.waypoints.updateIn([prevState.waypoints.size - 1], line => line.push(point))
+            waypoints: prevState.waypoints.updateIn([prevState.waypoints.size - 1], line => line.push(point)),
+            previousWayPointX: point.get('x'),
+            previousWayPointY: point.get('y'),
         }));
+    }
+
+    handleMouseMove(event) {
+        this.setState(({
+            previousMouseX: event.offsetX,
+            previousMouseY: event.offsetY,
+        }));
+
+        const point = this.relativeCoordinatesForEvent(event);
+
+        if (this.state.initalWaypointDrawn) {
+            this.setState(prevState => ({
+                waypoints: prevState.waypoints.push(new Immutable.List([point])),
+                isDrawing: true
+            }));
+            this.setState(prevState =>  ({
+                waypoints: prevState.waypoints.updateIn([prevState.waypoints.size - 1], line => line.push(point)),
+            }));
+        }
     }
 
     handleMouseUp() {
