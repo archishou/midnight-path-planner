@@ -1,129 +1,141 @@
 import React from 'react';
-import './Field.css'
-import Immutable from "immutable";
+import { render } from 'react-dom';
+// import R from 'ramda';
+import Konva from 'konva';
+import { Layer, Rect, Stage, Group, Image} from 'react-konva';
+import useImage from 'use-image';
+
+class ColoredRect extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            color: 'green',
+        };
+        // so we can access props and state in handleClick
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        // change color if not drawing mode
+        if(!this.props.isDrawingMode) {
+            this.setState({
+                color: Konva.Util.getRandomColor(),
+            })
+        }
+    }
+
+    render() {
+        return (
+            <Group>
+                <Rect
+                    x={this.props.x}
+                    y={this.props.y}
+                    width={this.props.width}
+                    height={this.props.height}
+                    fill={this.state.color}
+                    onClick={this.handleClick}m
+                />
+            </Group>
+        );
+    }
+}
+
+const LionImage = () => {
+    const [image] = useImage('https://konvajs.org/assets/lion.png');
+    return <Image image={"resources/field.png"} />;
+};
 
 export default class Field extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            waypoints: new Immutable.List(),
-            isDrawing: false,
-            hover: false,
-            previousMouseX: 0,
-            previousMouseY: 0,
-            previousWayPointX: 0,
-            previousWayPointY: 0,
-            initalWaypointDrawn: false,
-        };
-
-        this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleMouseUp = this.handleMouseUp.bind(this);
-        this.handleMouseMove = this.handleMouseMove(this);
-        this.toggleHover = this.toggleHover.bind(this);
-    }
-
-    componentDidMount() {
-        document.addEventListener("mouseup", this.handleMouseUp);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener("mouseup", this.handleMouseUp);
-    }
-
-    handleMouseDown(mouseEvent) {
-        if (mouseEvent.button !== 0) return
-
-        const point = this.relativeCoordinatesForEvent(mouseEvent);
-
-        if (this.state.initalWaypointDrawn === false) {
-            this.setState(({
-                initalWaypointDrawn: true,
-            }));
-        }
-
-        this.setState(prevState => ({
-            waypoints: prevState.waypoints.push(new Immutable.List([point])),
-            isDrawing: true
-        }));
-
-        this.setState(prevState =>  ({
-            waypoints: prevState.waypoints.updateIn([prevState.waypoints.size - 1], line => line.push(point)),
-            previousWayPointX: point.get('x'),
-            previousWayPointY: point.get('y'),
-        }));
-    }
-
-    handleMouseMove(event) {
-        this.setState(({
-            previousMouseX: event.offsetX,
-            previousMouseY: event.offsetY,
-        }));
-
-        const point = this.relativeCoordinatesForEvent(event);
-
-        if (this.state.initalWaypointDrawn) {
-            this.setState(prevState => ({
-                waypoints: prevState.waypoints.push(new Immutable.List([point])),
-                isDrawing: true
-            }));
-            this.setState(prevState =>  ({
-                waypoints: prevState.waypoints.updateIn([prevState.waypoints.size - 1], line => line.push(point)),
-            }));
+            shapes: [],           // list of dimensions to be rendered as shapes
+            isDrawing: false,     // in the process of drawing a shape
+            isDrawingMode: true,  // allow shapes to be drawn
         }
     }
 
-    handleMouseUp() {
-        this.setState({ isDrawing: false });
-    }
+    handleClick = (e) => {
+        if (!this.state.isDrawingMode) return;
+        // if we are drawing a shape, a click finishes the drawing
+        if(this.state.isDrawing) {
+            this.setState({
+                isDrawing: !this.state.isDrawing,
+            })
+            return;
+        }
 
-    toggleHover() {
-        this.setState({hover: !this.state.hover})
-    }
-
-    relativeCoordinatesForEvent(mouseEvent) {
-        const boundingRect = this.refs.drawArea.getBoundingClientRect();
-        return new Immutable.Map({
-            x: mouseEvent.clientX - boundingRect.left,
-            y: mouseEvent.clientY - boundingRect.top,
+        // otherwise, add a new rectangle at the mouse position with 0 width and height,
+        // and set isDrawing to true
+        const newShapes = this.state.shapes.slice();
+        newShapes.push({
+            x: e.evt.layerX,
+            y: e.evt.layerY,
+            width: 0,
+            height: 0,
         });
+
+        this.setState({
+            isDrawing: true,
+            shapes: newShapes,
+        })
+    }
+
+    handleMouseMove= (e) => {
+        if (!this.state.isDrawingMode) return;
+
+        const mouseX = e.evt.layerX;
+        const mouseY = e.evt.layerY;
+
+        // update the current rectangle's width and height based on the mouse position
+        if (this.state.isDrawing) {
+            // get the current shape (the last shape in this.state.shapes)
+            const currShapeIndex = this.state.shapes.length - 1;
+            const currShape = this.state.shapes[currShapeIndex];
+            const newWidth = mouseX - currShape.x;
+            const newHeight = mouseY - currShape.y;
+
+            const newShapesList = this.state.shapes.slice();
+            newShapesList[currShapeIndex] = {
+                x: currShape.x,   // keep starting position the same
+                y: currShape.y,
+                width: newWidth,  // new width and height
+                height: newHeight
+            }
+
+            this.setState({
+                shapes: newShapesList,
+            });
+        }
     }
 
     render() {
-        let hover;
-        if (this.state.hover) {
-            hover = 'hover'
-        } else {
-            hover = 'no-hover'
-        }
+
         return (
-            <div
-                className={`draw-area-${hover}`}
-                ref="drawArea"
-                onMouseDown={this.handleMouseDown}
-            >
-                <svg className="drawing"
-                     >{
-                        this.state.waypoints.map((line, index) => (
-                            <DrawingLine
-                                key={index}
-                                line={line}
-                                enter={this.toggleHover}
-                                leave={this.toggleHover}
-                            />
-                        ))}
-                </svg>
+            <div className={"draw-area"}>
+                <Stage width={window.innerWidth / 2} height={window.innerHeight}
+                       onContentClick={this.handleClick}
+                       onContentMouseMove={this.handleMouseMove}
+                >
+                    <Layer ref='layer'>
+                        <LionImage/>
+                        {
+                            this.state.shapes.map(shape => {
+                            return (
+                                <ColoredRect
+                                    x={shape.x}
+                                    y={shape.y}
+                                    width={shape.width}
+                                    height={shape.height}
+                                    isDrawingMode={this.state.isDrawingMode}
+                                />
+                            );
+                        })}
+
+                    </Layer>
+                </Stage>
             </div>
         );
     }
 }
 
-function DrawingLine({ line , enter, leave}) {
-    const pathData = "M " +
-        line
-            .map(p => {
-                return `${p.get('x')} ${p.get('y')}`;
-            })
-            .join(" L ");
-
-    return <path className="path" d={pathData} onMouseLeave={leave} onMouseEnter={enter}/>;
-}

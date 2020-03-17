@@ -1,21 +1,10 @@
 
-.draw-area-no-hover {
+.draw-area {
     width: 50vw;
     height: 100vh;
     float: left;
     cursor: crosshair;
     background-color: black;
-    background-image: url('resources/field.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-}
-
-.draw-area-hover {
-    width: 50vw;
-    height: 100vh;
-    float: left;
-    cursor: crosshair;
-    background-color: white;
     background-image: url('resources/field.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
