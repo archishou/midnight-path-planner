@@ -1,9 +1,12 @@
 import React from 'react';
-import { Layer, Stage, Line, Shape, Image} from 'react-konva';
+import { Layer, Stage, Line, Image} from 'react-konva';
 import useImage from 'use-image';
 
 const fieldImgURL = 'https://i.postimg.cc/XqTK09xY/field.png';
 const fieldScale = 0.8;
+const xOffset = window.innerWidth / 8;
+const yOffset = 10;
+
 const FieldImage = () => {
     const [image] = useImage(fieldImgURL);
     return <Image image={image} scaleX={fieldScale} scaleY={fieldScale}/>;
@@ -19,23 +22,20 @@ export default class Field extends React.Component {
 
     handleClick = (e) => {
         this.setState(({
-            coordinates: this.state.coordinates.concat(e.evt.layerX, e.evt.layerY),
+            coordinates: this.state.coordinates.concat(e.evt.offsetX - xOffset, e.evt.offsetY - yOffset),
         }));
-        console.log("State");
-        console.log(this.state.coordinates);
+        console.log("Coordinates: %s", this.state.coordinates.toString());
     };
 
     handleMouseMove= (e) => {
 
     };
 
-
-
     render() {
 
         return (
-            <div className={"draw-area"}>
-                <Stage width={window.innerWidth / 2} height={window.innerHeight}
+            <div >
+                <Stage width={(5 * window.innerWidth) / 8} height={window.innerHeight} x={xOffset} y={yOffset}
                        onContentClick={this.handleClick}
                        onContentMouseMove={this.handleMouseMove}
                 >
@@ -52,4 +52,3 @@ export default class Field extends React.Component {
         );
     }
 }
-
