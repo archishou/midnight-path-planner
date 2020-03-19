@@ -10,7 +10,6 @@ class Robot extends React.Component {
     }
     travel = async () => {
         const waypoints = this.props.waypoints;
-        console.log("Robot clicked" + waypoints.length);
         let index = 0;
         while (index < waypoints.length - 1) {
             this.rect.to({
@@ -18,7 +17,7 @@ class Robot extends React.Component {
                 y: waypoints[index + 1] - (Constants.ROBOT_SIZE / 2),
                 duration: 1
             });
-            await sleep(1000);
+            if (index !== 0) await sleep(1000);
             index += 2;
         }
     };

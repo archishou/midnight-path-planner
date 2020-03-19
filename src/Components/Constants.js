@@ -1,5 +1,5 @@
 const Constants = {
-    ROBOT_SIZE: 50,
+    ROBOT_SIZE: 75,
 };
 
 export default Constants

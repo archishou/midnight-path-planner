@@ -4,7 +4,7 @@ import useImage from 'use-image';
 import Robot from './Robot'
 import Constants from "../Constants";
 const fieldImgURL = 'https://i.postimg.cc/XqTK09xY/field.png';
-const fieldScale = 0.8;
+const fieldScale = 1.2;
 const xOffset = window.innerWidth / 8;
 const yOffset = 10;
 
@@ -27,22 +27,38 @@ export default class Field extends React.Component {
     handleClick = (e) => {
         const eventX = e.evt.offsetX - xOffset;
         const eventY =  e.evt.offsetY - yOffset;
-        this.setState(({
-            coordinates: this.state.coordinates.concat(eventX, eventY),
-        }));
-        if (this.state.coordinates.length === 2) {
+        if (this.state.coordinates.length === 0) {
             this.setState(({
                 initX: eventX - (Constants.ROBOT_SIZE / 2),
                 initY: eventY - (Constants.ROBOT_SIZE / 2),
                 robotVisible: true,
+                coordinates: this.state.coordinates.concat(eventX, eventY),
             }));
         }
-        console.log("Coordinates: %s", this.state.coordinates.toString());
+        if (!this.robotClicked(eventX, eventY)) {
+            this.setState(({
+                coordinates: this.state.coordinates.concat(eventX, eventY),
+            }));
+        }
     };
 
-    handleMouseMove= (e) => {
+    handleMouseMove = (e) => {
 
     };
+
+    robotClicked(eventX, eventY) {
+        console.log("EventX: %d EventY: %d", eventX, eventY);
+        let x1 = eventX <= this.state.coordinates[0] + (Constants.ROBOT_SIZE / 2);
+        let x2 = eventX >= this.state.coordinates[0] - (Constants.ROBOT_SIZE / 2);
+
+        let y1 = eventY <= this.state.coordinates[1] + (Constants.ROBOT_SIZE / 2);
+        let y2 = eventY >= this.state.coordinates[1] - (Constants.ROBOT_SIZE / 2);
+        console.log("x1: &b, x2: %b, y1: %b, y2: %b", x1, x2, y1, y2);
+        if (x1 && x2 && y1 && y2) {
+            console.log("Clicked");
+            return true;
+        }
+    }
 
     render() {
         return (
