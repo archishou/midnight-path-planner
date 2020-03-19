@@ -1,7 +1,8 @@
 import React from 'react';
-import { Layer, Stage, Line, Image} from 'react-konva';
+import {Layer, Stage, Line, Image, Rect} from 'react-konva';
 import useImage from 'use-image';
-
+import Robot from './Robot'
+import Constants from "../Constants";
 const fieldImgURL = 'https://i.postimg.cc/XqTK09xY/field.png';
 const fieldScale = 0.8;
 const xOffset = window.innerWidth / 8;
@@ -17,13 +18,25 @@ export default class Field extends React.Component {
         super(props);
         this.state = {
             coordinates: [],
+            initX: 0,
+            initY: 0,
+            robotVisible: false,
         }
     }
 
     handleClick = (e) => {
+        const eventX = e.evt.offsetX - xOffset;
+        const eventY =  e.evt.offsetY - yOffset;
         this.setState(({
-            coordinates: this.state.coordinates.concat(e.evt.offsetX - xOffset, e.evt.offsetY - yOffset),
+            coordinates: this.state.coordinates.concat(eventX, eventY),
         }));
+        if (this.state.coordinates.length === 2) {
+            this.setState(({
+                initX: eventX - (Constants.ROBOT_SIZE / 2),
+                initY: eventY - (Constants.ROBOT_SIZE / 2),
+                robotVisible: true,
+            }));
+        }
         console.log("Coordinates: %s", this.state.coordinates.toString());
     };
 
@@ -32,18 +45,21 @@ export default class Field extends React.Component {
     };
 
     render() {
-
         return (
-            <div >
+            <div id={"field-area"}>
                 <Stage width={(5 * window.innerWidth) / 8} height={window.innerHeight} x={xOffset} y={yOffset}
                        onContentClick={this.handleClick}
                        onContentMouseMove={this.handleMouseMove}
                 >
                     <Layer ref='layer'>
                         <FieldImage/>
+                        <Robot waypoints={this.state.coordinates}
+                               initX={this.state.initX} initY={this.state.initY}
+                               robotVisible={this.state.robotVisible}
+                        />
                         <Line
                             points={this.state.coordinates}
-                            tension={0.4}
+                            tension={0}
                             stroke="black"
                         />
                     </Layer>
