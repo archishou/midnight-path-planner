@@ -77,6 +77,7 @@ export default class Field extends React.Component {
                             points={this.state.coordinates}
                             tension={0}
                             stroke="black"
+                            strokeWidth={4}
                         />
                     </Layer>
                 </Stage>
