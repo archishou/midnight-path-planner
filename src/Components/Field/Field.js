@@ -1,7 +1,13 @@
 import React from 'react';
-import { Layer, Stage, Line} from 'react-konva';
+import { Layer, Stage, Line, Shape, Image} from 'react-konva';
+import useImage from 'use-image';
 
-
+const fieldImgURL = 'https://i.postimg.cc/XqTK09xY/field.png';
+const fieldScale = 0.8;
+const FieldImage = () => {
+    const [image] = useImage(fieldImgURL);
+    return <Image image={image} scaleX={fieldScale} scaleY={fieldScale}/>;
+};
 
 export default class Field extends React.Component {
     constructor(props) {
@@ -23,6 +29,8 @@ export default class Field extends React.Component {
 
     };
 
+
+
     render() {
 
         return (
@@ -32,9 +40,10 @@ export default class Field extends React.Component {
                        onContentMouseMove={this.handleMouseMove}
                 >
                     <Layer ref='layer'>
+                        <FieldImage/>
                         <Line
                             points={this.state.coordinates}
-                            tension={0}
+                            tension={0.4}
                             stroke="black"
                         />
                     </Layer>
