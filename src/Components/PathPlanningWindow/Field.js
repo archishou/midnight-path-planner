@@ -18,8 +18,6 @@ export default class Field extends React.Component {
         super(props);
         this.state = {
             coordinates: [],
-            initX: 0,
-            initY: 0,
             drawingMode: false,
         }
     }
@@ -29,7 +27,6 @@ export default class Field extends React.Component {
         const eventY =  e.evt.offsetY - yOffset;
         if (this.state.drawingMode || this.state.coordinates.length === 0) {
             this.setState(({
-                robotVisible: true,
                 coordinates: this.state.coordinates.concat(eventX, eventY),
             }));
         }
