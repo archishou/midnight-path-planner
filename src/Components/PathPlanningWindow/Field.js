@@ -29,6 +29,7 @@ export default class Field extends React.Component {
         const eventY =  e.evt.offsetY - yOffset;
         if (this.state.drawingMode || this.state.coordinates.length === 0) {
             this.setState(({
+                opacity: 1,
                 coordinates: this.state.coordinates.concat(eventX, eventY),
                 robotFill: "black"
             }));
@@ -53,6 +54,7 @@ export default class Field extends React.Component {
         const eventY =  e.evt.offsetY - yOffset;
         if (this.state.coordinates.length === 0) {
             this.setState({
+                opacity: 0.5,
                 drawingMode: true,
                 roboty: eventY,
                 robotx: eventX,
@@ -86,6 +88,7 @@ export default class Field extends React.Component {
                                robotFill={this.state.robotFill}
                                drawingModeOff={this.drawingModeOff}
                                drawingModeOn={this.drawingModeOn}
+                               opacity={this.state.opacity}
                         />
                         <Line
                             points={this.state.coordinates}

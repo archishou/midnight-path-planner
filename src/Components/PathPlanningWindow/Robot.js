@@ -39,6 +39,7 @@ class Robot extends React.Component {
                 onClick={this.travel}
                 onMouseEnter={this.props.drawingModeOff}
                 onMouseLeave={this.props.drawingModeOn}
+                opacity={this.props.opacity}
             />
         );
     }
