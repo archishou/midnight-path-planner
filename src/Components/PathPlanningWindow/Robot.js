@@ -32,10 +32,10 @@ class Robot extends React.Component {
                 }}
                 width={Constants.ROBOT_SIZE}
                 height={Constants.ROBOT_SIZE}
-                x={this.props.waypoints[0] - (Constants.ROBOT_SIZE / 2)}
-                y={this.props.waypoints[1]- (Constants.ROBOT_SIZE / 2)}
+                x={this.props.robotx - (Constants.ROBOT_SIZE / 2)}
+                y={this.props.roboty - (Constants.ROBOT_SIZE / 2)}
                 visible={this.props.robotVisible}
-                fill="black"
+                fill={this.props.robotFill}
                 onClick={this.travel}
                 onMouseEnter={this.props.drawingModeOff}
                 onMouseLeave={this.props.drawingModeOn}

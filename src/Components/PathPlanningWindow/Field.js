@@ -19,6 +19,7 @@ export default class Field extends React.Component {
         this.state = {
             coordinates: [],
             drawingMode: false,
+            robotFill: "grey"
         }
     }
 
@@ -28,6 +29,7 @@ export default class Field extends React.Component {
         if (this.state.drawingMode || this.state.coordinates.length === 0) {
             this.setState(({
                 coordinates: this.state.coordinates.concat(eventX, eventY),
+                robotFill: "black"
             }));
         }
         console.log(this.state.coordinates)
@@ -45,6 +47,18 @@ export default class Field extends React.Component {
         });
     };
 
+    handleMouseMove = (e) => {
+        const eventX = e.evt.offsetX - xOffset;
+        const eventY =  e.evt.offsetY - yOffset;
+        if (this.state.coordinates.length === 0) {
+            this.setState({
+                drawingMode: true,
+                roboty: eventY,
+                robotx: eventX,
+            });
+        }
+    };
+
     render() {
         return (
             <div id={"field-area"}>
@@ -55,8 +69,10 @@ export default class Field extends React.Component {
                     <Layer ref='layer'>
                         <FieldImage/>
                         <Robot waypoints={this.state.coordinates}
-                               initX={this.state.initX} initY={this.state.initY}
-                               robotVisible={this.state.coordinates.length !== 0}
+                               robotx={this.state.robotx}
+                               roboty={this.state.roboty}
+                               robotFill={this.state.robotFill}
+                               robotVisible={true}
                                drawingModeOff={this.drawingModeOff}
                                drawingModeOn={this.drawingModeOn}
                         />
