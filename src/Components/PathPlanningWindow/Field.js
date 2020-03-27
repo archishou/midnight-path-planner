@@ -4,9 +4,9 @@ import useImage from 'use-image';
 import Robot from './Robot'
 import Constants from "../Constants";
 const fieldImgURL = 'https://i.postimg.cc/XqTK09xY/field.png';
-const fieldScale = 1.2;
+const fieldScale = 1.1;
 const xOffset = window.innerWidth / 8;
-const yOffset = 10;
+const yOffset = 0;
 
 const FieldImage = () => {
     const [image] = useImage(fieldImgURL);
@@ -75,7 +75,7 @@ export default class Field extends React.Component {
                         />
                         <Line
                             points={this.state.coordinates}
-                            tension={0.4}
+                            tension={0}
                             stroke="black"
                             strokeWidth={4}
                         />
