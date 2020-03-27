@@ -34,7 +34,7 @@ class Robot extends React.Component {
                 height={Constants.ROBOT_SIZE}
                 x={this.props.robotx - (Constants.ROBOT_SIZE / 2)}
                 y={this.props.roboty - (Constants.ROBOT_SIZE / 2)}
-                visible={this.props.robotVisible}
+                visible={true}
                 fill={this.props.robotFill}
                 onClick={this.travel}
                 onMouseEnter={this.props.drawingModeOff}

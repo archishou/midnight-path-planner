@@ -28,6 +28,12 @@
   color: #61dafb;
 }
 
+.menu-div {
+  width: 12.5vw;
+  height: 100vh;
+  display: inline-block;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

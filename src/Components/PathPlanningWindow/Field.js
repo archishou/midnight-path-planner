@@ -5,7 +5,7 @@ import Robot from './Robot'
 import Constants from "../Constants";
 const fieldImgURL = 'https://i.postimg.cc/XqTK09xY/field.png';
 const fieldScale = 1.1;
-const xOffset = window.innerWidth / 8;
+const xOffset = 0;
 const yOffset = 0;
 
 const FieldImage = () => {
@@ -17,6 +17,7 @@ export default class Field extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            mousepos: [],
             coordinates: [],
             drawingMode: false,
             robotFill: "grey"
@@ -56,13 +57,24 @@ export default class Field extends React.Component {
                 roboty: eventY,
                 robotx: eventX,
             });
+        } else {
+            if (this.state.drawingMode) {
+                this.setState({
+                    mousepos: [this.state.coordinates[this.state.coordinates.length - 2], this.state.coordinates[this.state.coordinates.length - 1], eventX, eventY]
+                });
+            } else {
+                this.setState({
+                    mousepos: []
+                });
+            }
+
         }
     };
 
     render() {
         return (
-            <div id={"field-area"}>
-                <Stage width={(5 * window.innerWidth) / 8} height={window.innerHeight} x={xOffset} y={yOffset}
+            <div className={"field-area"}>
+                <Stage width={(4.8 * window.innerWidth) / 8} height={window.innerHeight}
                        onContentClick={this.handleClick}
                        onContentMouseMove={this.handleMouseMove}
                 >
@@ -72,13 +84,18 @@ export default class Field extends React.Component {
                                robotx={this.state.robotx}
                                roboty={this.state.roboty}
                                robotFill={this.state.robotFill}
-                               robotVisible={true}
                                drawingModeOff={this.drawingModeOff}
                                drawingModeOn={this.drawingModeOn}
                         />
                         <Line
                             points={this.state.coordinates}
                             tension={0}
+                            stroke="black"
+                            strokeWidth={4}
+                        />
+                        <Line
+                            points={this.state.mousepos}
+                            tension={0.3}
                             stroke="black"
                             strokeWidth={4}
                         />
