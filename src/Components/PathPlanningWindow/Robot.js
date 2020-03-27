@@ -4,7 +4,7 @@ import { Stage, Layer, Rect } from 'react-konva';
 import Constants from "../Constants";
 import sleep from '../Utils'
 class Robot extends React.Component {
-
+    rbtOffset = (Constants.ROBOT_SIZE / 2);
     constructor(props) {
         super(props);
     }
@@ -13,12 +13,12 @@ class Robot extends React.Component {
         let index = 0;
         while (index < waypoints.length - 1) {
             this.rect.to({
-                x: waypoints[index] - (Constants.ROBOT_SIZE / 2),
-                y: waypoints[index + 1] - (Constants.ROBOT_SIZE / 2),
+                x: waypoints[index] - this.rbtOffset,
+                y: waypoints[index + 1] - this.rbtOffset,
                 duration: 1
             });
-            if (this.rect.x() !== waypoints[index] - (Constants.ROBOT_SIZE / 2) &&
-                this.rect.y() !== waypoints[index + 1] - (Constants.ROBOT_SIZE / 2)) {
+            if (this.rect.x() !== waypoints[index] - this.rbtOffset &&
+                this.rect.y() !== waypoints[index + 1] - this.rbtOffset) {
                 await sleep(1000);
             }
             index += 2;
@@ -32,8 +32,8 @@ class Robot extends React.Component {
                 }}
                 width={Constants.ROBOT_SIZE}
                 height={Constants.ROBOT_SIZE}
-                x={this.props.robotx - (Constants.ROBOT_SIZE / 2)}
-                y={this.props.roboty - (Constants.ROBOT_SIZE / 2)}
+                x={this.props.robotx - this.rbtOffset}
+                y={this.props.roboty - this.rbtOffset}
                 visible={true}
                 fill={this.props.robotFill}
                 onClick={this.travel}
