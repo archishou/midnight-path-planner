@@ -95,7 +95,7 @@ export default class Field extends React.Component {
                         />
                         <Line
                             points={this.state.mousepos}
-                            tension={0.3}
+                            tension={1}
                             stroke="black"
                             strokeWidth={4}
                         />
