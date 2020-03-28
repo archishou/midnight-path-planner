@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import Konva from "konva";
 import { Stage, Layer, Rect } from 'react-konva';
 import Constants from "../Constants";
 import sleep from '../Utils'
@@ -13,14 +14,22 @@ class Robot extends React.Component {
         let index = 0;
         while (index < waypoints.length - 1) {
             this.rect.to({
-                x: waypoints[index] - this.rbtOffset,
-                y: waypoints[index + 1] - this.rbtOffset,
+                x: waypoints[index],
+                y: waypoints[index + 1],
                 duration: 1
             });
-            if (this.rect.x() !== waypoints[index] - this.rbtOffset &&
-                this.rect.y() !== waypoints[index + 1] - this.rbtOffset) {
+            let dy = waypoints[index + 3] - waypoints[index + 1];
+            let dx = waypoints[index] - waypoints[index + 2];
+            let theta = (180 * Math.atan2(dy, dx)) / Math.PI;
+            theta = 90 - theta;
+            console.log("dy: %f dx %f", dy, dx);
+            console.log("Theta: %f", theta);
+            if (this.rect.x() !== waypoints[index] &&
+                this.rect.y() !== waypoints[index + 1]) {
                 await sleep(1000);
             }
+            if (!isNaN(theta)) this.rect.rotate(theta);
+
             index += 2;
         }
     };
@@ -32,14 +41,16 @@ class Robot extends React.Component {
                 }}
                 width={Constants.ROBOT_SIZE}
                 height={Constants.ROBOT_SIZE}
-                x={this.props.robotx - this.rbtOffset}
-                y={this.props.roboty - this.rbtOffset}
+                x={this.props.robotx}
+                y={this.props.roboty}
                 visible={true}
                 fill={this.props.robotFill}
                 onClick={this.travel}
                 onMouseEnter={this.props.drawingModeOff}
                 onMouseLeave={this.props.drawingModeOn}
                 opacity={this.props.opacity}
+                offsetX={this.rbtOffset}
+                offsetY={this.rbtOffset}
             />
         );
     }

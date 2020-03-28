@@ -80,7 +80,10 @@ export default class Field extends React.Component {
                        onContentClick={this.handleClick}
                        onContentMouseMove={this.handleMouseMove}
                 >
-                    <Layer ref='layer'>
+                    <Layer ref={
+                        node => {
+                            this.mainLayer = node;
+                        }}>
                         <FieldImage/>
                         <Robot waypoints={this.state.coordinates}
                                robotx={this.state.robotx}
@@ -89,6 +92,7 @@ export default class Field extends React.Component {
                                drawingModeOff={this.drawingModeOff}
                                drawingModeOn={this.drawingModeOn}
                                opacity={this.state.opacity}
+                               layer={this.mainLayer}
                         />
                         <Line
                             points={this.state.coordinates}
