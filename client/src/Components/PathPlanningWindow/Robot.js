@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
-import Konva from "konva";
 import { Stage, Layer, Rect } from 'react-konva';
 import Constants from "../Constants";
 import sleep from '../Utils'
