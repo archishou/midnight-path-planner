@@ -8,6 +8,9 @@ class Robot extends React.Component {
     rbtOffset = (Constants.ROBOT_SIZE / 2);
     constructor(props) {
         super(props);
+        this.state = {
+            absoluteTheta: 0,
+        }
     }
     travel = async () => {
         let waypoints = this.props.waypoints;
@@ -22,13 +25,14 @@ class Robot extends React.Component {
             let dx = waypoints[index] - waypoints[index + 2];
             let theta = (180 * Math.atan2(dy, dx)) / Math.PI;
             theta = 90 - theta;
+            this.state.absoluteTheta = theta - this.state.absoluteTheta;
             console.log("dy: %f dx %f", dy, dx);
             console.log("Theta: %f", theta);
             if (this.rect.x() !== waypoints[index] &&
                 this.rect.y() !== waypoints[index + 1]) {
                 await sleep(1000);
             }
-            if (!isNaN(theta)) this.rect.rotate(theta);
+            if (!isNaN(theta)) this.rect.rotate(this.state.absoluteTheta);
 
             index += 2;
         }
