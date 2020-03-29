@@ -24,6 +24,7 @@ export default class Field extends React.Component {
             drawingMode: false,
             robotFill: "grey",
             waypoints: [],
+            showPreview: true,
         }
     }
 
@@ -45,6 +46,33 @@ export default class Field extends React.Component {
 
     };
 
+    handleMouseMove = (e) => {
+        if (this.state.showPreview) {
+            const eventX = e.evt.offsetX - xOffset;
+            const eventY =  e.evt.offsetY - yOffset;
+            if (this.state.knots.length === 0) {
+                this.setState({
+                    opacity: 0.5,
+                    drawingMode: true,
+                    roboty: eventY,
+                    robotx: eventX,
+                });
+            } else {
+                let previewWaypoints = this.state.knots.concat(eventX, eventY);
+                if (this.state.drawingMode && previewWaypoints.length > 2) {
+                    this.setState({
+                        previewKnots: this.getWayPoints(previewWaypoints)
+                    });
+                } else {
+                    this.setState({
+                        previewKnots: []
+                    });
+                }
+
+            }
+        }
+    };
+
     drawingModeOff = (e) => {
         this.setState({
             drawingMode: false
@@ -56,6 +84,19 @@ export default class Field extends React.Component {
             drawingMode: true
         });
     };
+
+    enablePreview = (e) => {
+        this.setState({
+            showPreview: true
+        });
+    };
+
+    disablePreview = (e) => {
+        this.setState({
+            showPreview: false
+        });
+    };
+
 
     getWayPoints(knotsInput) {
         let knots = [];
@@ -78,31 +119,6 @@ export default class Field extends React.Component {
 
         return updatedWaypoints
     }
-
-    handleMouseMove = (e) => {
-        const eventX = e.evt.offsetX - xOffset;
-        const eventY =  e.evt.offsetY - yOffset;
-        if (this.state.knots.length === 0) {
-            this.setState({
-                opacity: 0.5,
-                drawingMode: true,
-                roboty: eventY,
-                robotx: eventX,
-            });
-        } else {
-            let previewWaypoints = this.state.knots.concat(eventX, eventY);
-            if (this.state.drawingMode && previewWaypoints.length > 2) {
-                this.setState({
-                    previewKnots: this.getWayPoints(previewWaypoints)
-                });
-            } else {
-                this.setState({
-                    previewKnots: []
-                });
-            }
-
-        }
-    };
 
     render() {
         return (
@@ -128,6 +144,7 @@ export default class Field extends React.Component {
                             tension={1}
                             stroke="black"
                             strokeWidth={4}
+                            visible={this.state.showPreview}
                         />
                         <Line
                             points={this.state.waypoints}
@@ -144,6 +161,8 @@ export default class Field extends React.Component {
                                drawingModeOn={this.drawingModeOn}
                                opacity={this.state.opacity}
                                layer={this.mainLayer}
+                               enablePreview={this.enablePreview}
+                               disablePreview={this.disablePreview}
                         />
 
                     </Layer>

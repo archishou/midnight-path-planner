@@ -14,6 +14,7 @@ class Robot extends React.Component {
         let waypoints = this.props.waypoints;
         let index = 0;
         while (index < waypoints.length - 1) {
+            this.props.disablePreview()
             this.rect.to({
                 x: waypoints[index],
                 y: waypoints[index + 1],
@@ -31,7 +32,7 @@ class Robot extends React.Component {
                 await sleep(1000 * Constants.PATH_RESOLUTION);
             }
             //if (!isNaN(theta)) this.rect.rotate(this.state.absoluteTheta);
-
+            this.props.enablePreview()
             index += 2;
         }
     };
