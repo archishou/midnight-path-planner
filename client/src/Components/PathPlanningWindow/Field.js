@@ -60,7 +60,7 @@ export default class Field extends React.Component {
     getWayPoints(knotsInput) {
         let knots = [];
         let updatedWaypoints = [];
-        let size = this.state.coordinates.length;
+        let size = knotsInput.length;
         let index = 0;
         while (index < size) {
             knots.push(new Point(knotsInput[index], knotsInput[index + 1]));
@@ -90,9 +90,10 @@ export default class Field extends React.Component {
                 robotx: eventX,
             });
         } else {
-            if (this.state.drawingMode) {
+            let previewWaypoints = this.state.coordinates.concat(eventX, eventY);
+            if (this.state.drawingMode && previewWaypoints.length > 2) {
                 this.setState({
-                    mousepos: [this.state.coordinates[this.state.coordinates.length - 2], this.state.coordinates[this.state.coordinates.length - 1], eventX, eventY]
+                    mousepos: this.getWayPoints(previewWaypoints)
                 });
             } else {
                 this.setState({
@@ -133,7 +134,7 @@ export default class Field extends React.Component {
                         <Line
                             points={this.state.mousepos}
                             tension={1}
-                            stroke="black"
+                            stroke="green"
                             strokeWidth={4}
                         />
                         <Line
