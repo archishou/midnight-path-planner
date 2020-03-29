@@ -17,7 +17,7 @@ class Robot extends React.Component {
             this.rect.to({
                 x: waypoints[index],
                 y: waypoints[index + 1],
-                duration: 1
+                duration: Constants.PATH_RESOLUTION
             });
             let dy = waypoints[index + 3] - waypoints[index + 1];
             let dx = waypoints[index] - waypoints[index + 2];
@@ -28,9 +28,9 @@ class Robot extends React.Component {
             console.log("Theta: %f", theta);
             if (this.rect.x() !== waypoints[index] &&
                 this.rect.y() !== waypoints[index + 1]) {
-                await sleep(1000);
+                await sleep(1000 * Constants.PATH_RESOLUTION);
             }
-            if (!isNaN(theta)) this.rect.rotate(this.state.absoluteTheta);
+            //if (!isNaN(theta)) this.rect.rotate(this.state.absoluteTheta);
 
             index += 2;
         }

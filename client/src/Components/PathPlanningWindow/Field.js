@@ -136,7 +136,7 @@ export default class Field extends React.Component {
                             strokeWidth={4}
                             opacity={0.5}
                         />
-                        <Robot waypoints={this.state.knots}
+                        <Robot waypoints={this.state.waypoints}
                                robotx={this.state.robotx}
                                roboty={this.state.roboty}
                                robotFill={this.state.robotFill}

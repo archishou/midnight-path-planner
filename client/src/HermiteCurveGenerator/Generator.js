@@ -1,6 +1,7 @@
 import {inverse, Matrix, solve} from "ml-matrix";
 import Point from './Point'
 import Segment from './Segment'
+import Constants from "../Components/Constants";
 function generateConstraintMatrix(ns) {
     // Each point apart from the initial point, requires 4 constraints. N represents the number of constraints.
     let numPoints = ns.length;
@@ -93,7 +94,7 @@ export default function GetPoints(knots) {
     if (xSegments == null || ySegments == null) return null;
     let points = [];
     let t = 0;
-    let resolution = 0.1;
+    let resolution = Constants.PATH_RESOLUTION;
     // segments = knots - 1
     let n = knots.length - 1;
     let index = 0;
