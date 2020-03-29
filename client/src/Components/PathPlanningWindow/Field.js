@@ -3,6 +3,8 @@ import {Layer, Stage, Line, Image, Rect} from 'react-konva';
 import useImage from 'use-image';
 import Robot from './Robot'
 import Constants from "../Constants";
+import GetPoints from "../../HermiteCurveGenerator/Generator";
+import Point from "../../HermiteCurveGenerator/Point"
 const fieldImgURL = 'https://i.postimg.cc/XqTK09xY/field.png';
 const fieldScale = 1.1;
 const xOffset = 0;
@@ -25,6 +27,18 @@ export default class Field extends React.Component {
     }
 
     handleClick = (e) => {
+        let p1 = new Point(0, 0);
+        let p2 = new Point(50, 50);
+        let p3 = new Point(70, 50);
+        let knots = [p1, p2, p3];
+        let points = GetPoints(knots);
+        console.log("Here");
+        console.log("Here");
+        let str = "";
+        points.forEach((p) => {
+           str = str + "(" + p.x + ", " + p.y + "), ";
+        });
+        console.log(str);
         const eventX = e.evt.offsetX - xOffset;
         const eventY =  e.evt.offsetY - yOffset;
         if (this.state.drawingMode || this.state.coordinates.length === 0) {
@@ -34,7 +48,6 @@ export default class Field extends React.Component {
                 robotFill: "black"
             }));
         }
-        console.log(this.state.coordinates)
     };
 
     drawingModeOff = (e) => {

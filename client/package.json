@@ -10,6 +10,7 @@
     "immutable": "^4.0.0-rc.12",
     "konva": "^4.2.0",
     "materialize-css": "^1.0.0-rc.2",
+    "ml-matrix": "^6.4.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-easy-panzoom": "^0.4.4",
