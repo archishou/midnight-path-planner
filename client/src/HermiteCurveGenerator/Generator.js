@@ -1,4 +1,4 @@
-import {Matrix, solve} from "ml-matrix";
+import {inverse, Matrix, solve} from "ml-matrix";
 import Point from './Point'
 import Segment from './Segment'
 function generateConstraintMatrix(ns) {
@@ -57,6 +57,8 @@ function generateSolutionsMatrix(ns) {
     while (solutionIndex < n) {
         matrix[solutionIndex + 2][0] = ns[pointIndex];
         matrix[solutionIndex + 3][0] = ns[pointIndex + 1];
+        //console.log(ns[pointIndex + 1]);
+        //console.log(matrix[solutionIndex + 3][0]);
         solutionIndex += 4;
         pointIndex++;
     }
@@ -69,6 +71,7 @@ function getSegments(ns) {
     let solutions = generateSolutionsMatrix(ns);
     if (constraints == null) return null;
     let coeffs = solve(constraints, solutions);
+    //console.log(solutions)
     let n = coeffs.rows;
     let index = 0;
     while (index < n) {
@@ -85,13 +88,12 @@ export default function GetPoints(knots) {
        xs.push(e.x);
        ys.push(e.y);
     });
-
     let xSegments = getSegments(xs);
     let ySegments = getSegments(ys);
     if (xSegments == null || ySegments == null) return null;
     let points = [];
     let t = 0;
-    let resolution = 0.01;
+    let resolution = 0.1;
     // segments = knots - 1
     let n = knots.length - 1;
     let index = 0;

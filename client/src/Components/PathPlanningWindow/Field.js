@@ -22,23 +22,12 @@ export default class Field extends React.Component {
             mousepos: [],
             coordinates: [],
             drawingMode: false,
-            robotFill: "grey"
+            robotFill: "grey",
+            waypoints: [],
         }
     }
 
     handleClick = (e) => {
-        let p1 = new Point(0, 0);
-        let p2 = new Point(50, 50);
-        let p3 = new Point(70, 50);
-        let knots = [p1, p2, p3];
-        let points = GetPoints(knots);
-        console.log("Here");
-        console.log("Here");
-        let str = "";
-        points.forEach((p) => {
-           str = str + "(" + p.x + ", " + p.y + "), ";
-        });
-        console.log(str);
         const eventX = e.evt.offsetX - xOffset;
         const eventY =  e.evt.offsetY - yOffset;
         if (this.state.drawingMode || this.state.coordinates.length === 0) {
@@ -48,6 +37,12 @@ export default class Field extends React.Component {
                 robotFill: "black"
             }));
         }
+        if (this.state.coordinates.length > 2) {
+            this.setState(({
+                waypoints: this.getWayPoints(this.state.coordinates)
+            }));
+        }
+
     };
 
     drawingModeOff = (e) => {
@@ -61,6 +56,28 @@ export default class Field extends React.Component {
             drawingMode: true
         });
     };
+
+    getWayPoints(knotsInput) {
+        let knots = [];
+        let updatedWaypoints = [];
+        let size = this.state.coordinates.length;
+        let index = 0;
+        while (index < size) {
+            knots.push(new Point(knotsInput[index], knotsInput[index + 1]));
+            index = index + 2;
+        }
+
+        let points = GetPoints(knots);
+
+        size = points.length;
+        index = 0;
+        while (index < size) {
+            updatedWaypoints.push(points[index].x, points[index].y);
+            index++
+        }
+
+        return updatedWaypoints
+    }
 
     handleMouseMove = (e) => {
         const eventX = e.evt.offsetX - xOffset;
@@ -117,6 +134,12 @@ export default class Field extends React.Component {
                             points={this.state.mousepos}
                             tension={1}
                             stroke="black"
+                            strokeWidth={4}
+                        />
+                        <Line
+                            points={this.state.waypoints}
+                            tension={0}
+                            stroke="red"
                             strokeWidth={4}
                         />
                     </Layer>
