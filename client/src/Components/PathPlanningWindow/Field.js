@@ -19,8 +19,8 @@ export default class Field extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mousepos: [],
-            coordinates: [],
+            previewKnots: [],
+            knots: [],
             drawingMode: false,
             robotFill: "grey",
             waypoints: [],
@@ -30,16 +30,16 @@ export default class Field extends React.Component {
     handleClick = (e) => {
         const eventX = e.evt.offsetX - xOffset;
         const eventY =  e.evt.offsetY - yOffset;
-        if (this.state.drawingMode || this.state.coordinates.length === 0) {
+        if (this.state.drawingMode || this.state.knots.length === 0) {
             this.setState(({
                 opacity: 1,
-                coordinates: this.state.coordinates.concat(eventX, eventY),
+                knots: this.state.knots.concat(eventX, eventY),
                 robotFill: "black"
             }));
         }
-        if (this.state.coordinates.length > 2) {
+        if (this.state.knots.length > 2) {
             this.setState(({
-                waypoints: this.getWayPoints(this.state.coordinates)
+                waypoints: this.getWayPoints(this.state.knots)
             }));
         }
 
@@ -82,7 +82,7 @@ export default class Field extends React.Component {
     handleMouseMove = (e) => {
         const eventX = e.evt.offsetX - xOffset;
         const eventY =  e.evt.offsetY - yOffset;
-        if (this.state.coordinates.length === 0) {
+        if (this.state.knots.length === 0) {
             this.setState({
                 opacity: 0.5,
                 drawingMode: true,
@@ -90,14 +90,14 @@ export default class Field extends React.Component {
                 robotx: eventX,
             });
         } else {
-            let previewWaypoints = this.state.coordinates.concat(eventX, eventY);
+            let previewWaypoints = this.state.knots.concat(eventX, eventY);
             if (this.state.drawingMode && previewWaypoints.length > 2) {
                 this.setState({
-                    mousepos: this.getWayPoints(previewWaypoints)
+                    previewKnots: this.getWayPoints(previewWaypoints)
                 });
             } else {
                 this.setState({
-                    mousepos: []
+                    previewKnots: []
                 });
             }
 
@@ -116,7 +116,27 @@ export default class Field extends React.Component {
                             this.mainLayer = node;
                         }}>
                         <FieldImage/>
-                        <Robot waypoints={this.state.coordinates}
+                        <Line
+                            points={this.state.knots}
+                            tension={0}
+                            stroke="red"
+                            strokeWidth={4}
+                            opacity={0.25}
+                        />
+                        <Line
+                            points={this.state.previewKnots}
+                            tension={1}
+                            stroke="black"
+                            strokeWidth={4}
+                        />
+                        <Line
+                            points={this.state.waypoints}
+                            tension={0}
+                            stroke="green"
+                            strokeWidth={4}
+                            opacity={0.5}
+                        />
+                        <Robot waypoints={this.state.knots}
                                robotx={this.state.robotx}
                                roboty={this.state.roboty}
                                robotFill={this.state.robotFill}
@@ -125,24 +145,7 @@ export default class Field extends React.Component {
                                opacity={this.state.opacity}
                                layer={this.mainLayer}
                         />
-                        <Line
-                            points={this.state.coordinates}
-                            tension={0}
-                            stroke="black"
-                            strokeWidth={4}
-                        />
-                        <Line
-                            points={this.state.mousepos}
-                            tension={1}
-                            stroke="green"
-                            strokeWidth={4}
-                        />
-                        <Line
-                            points={this.state.waypoints}
-                            tension={0}
-                            stroke="red"
-                            strokeWidth={4}
-                        />
+
                     </Layer>
                 </Stage>
             </div>
