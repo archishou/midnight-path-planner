@@ -15,10 +15,10 @@ class Robot extends React.Component {
         this.setState({
             absoluteTheta: 0
         });
+        this.props.disablePreview();
         let waypoints = this.props.waypoints;
         let index = 0;
         while (index < waypoints.length - 1) {
-            this.props.disablePreview();
             this.rect.to({
                 x: waypoints[index],
                 y: waypoints[index + 1],
@@ -32,9 +32,9 @@ class Robot extends React.Component {
                 await sleep(1000 * Constants.PATH_RESOLUTION);
             }
             this.rotateToAngle(theta);
-            this.props.enablePreview();
             index += 2;
         }
+        this.props.enablePreview();
     };
     rotateToAngle(angle) {
         if (isNaN(angle)) return;
