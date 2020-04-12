@@ -11,10 +11,14 @@ class Robot extends React.Component {
         }
     }
     travel = async () => {
+        this.rotateToAngle(0);
+        this.setState({
+            absoluteTheta: 0
+        });
         let waypoints = this.props.waypoints;
         let index = 0;
         while (index < waypoints.length - 1) {
-            this.props.disablePreview()
+            this.props.disablePreview();
             this.rect.to({
                 x: waypoints[index],
                 y: waypoints[index + 1],
@@ -23,19 +27,24 @@ class Robot extends React.Component {
             let dy = waypoints[index + 3] - waypoints[index + 1];
             let dx = waypoints[index] - waypoints[index + 2];
             let theta = (180 * Math.atan2(dy, dx)) / Math.PI;
-            theta = 90 - theta;
-            this.state.absoluteTheta = theta - this.state.absoluteTheta;
-            console.log("dy: %f dx %f", dy, dx);
-            console.log("Theta: %f", theta);
             if (this.rect.x() !== waypoints[index] &&
                 this.rect.y() !== waypoints[index + 1]) {
                 await sleep(1000 * Constants.PATH_RESOLUTION);
             }
-            //if (!isNaN(theta)) this.rect.rotate(this.state.absoluteTheta);
-            this.props.enablePreview()
+            this.rotateToAngle(theta);
+            this.props.enablePreview();
             index += 2;
         }
     };
+    rotateToAngle(angle) {
+        if (isNaN(angle)) return;
+        console.log("Absolute Theta %f", this.state.absoluteTheta);
+        let theta = angle - this.state.absoluteTheta;
+        this.rect.rotate(-theta);
+        this.setState({
+            absoluteTheta: theta + this.state.absoluteTheta
+        });
+    }
     render() {
         return (
             <Rect

@@ -1,12 +1,11 @@
 import React from 'react';
-import {Layer, Stage, Line, Image, Rect} from 'react-konva';
+import {Layer, Stage, Line, Image} from 'react-konva';
 import useImage from 'use-image';
 import Robot from './Robot'
-import Constants from "../Constants";
 import GetPoints from "../../HermiteCurveGenerator/Generator";
 import Point from "../../HermiteCurveGenerator/Point"
 const fieldImgURL = 'https://i.postimg.cc/XqTK09xY/field.png';
-const fieldScale = 1.1;
+const fieldScale = 1.2;
 const xOffset = 0;
 const yOffset = 0;
 
@@ -43,7 +42,6 @@ export default class Field extends React.Component {
                 waypoints: this.getWayPoints(this.state.knots)
             }));
         }
-
     };
 
     handleMouseMove = (e) => {
