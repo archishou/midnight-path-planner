@@ -1,5 +1,5 @@
 import React from 'react';
-import Field from '../Components/PathPlanningWindow/Field.js'
+import Field from '../Components/PathPlanningViewer/Field.js'
 import './App.css';
 
 
