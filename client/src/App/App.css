@@ -28,10 +28,8 @@
   color: #61dafb;
 }
 
-.menu-div {
-  width: 12.5vw;
-  height: 100vh;
-  display: inline-block;
+.main-div {
+  background-color: black;
 }
 
 @keyframes App-logo-spin {

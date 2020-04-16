@@ -1,18 +1,13 @@
 import React from 'react';
-import {Layer, Stage, Line, Image} from 'react-konva';
+import {Layer, Stage, Line, Image as KonvaImage} from 'react-konva';
 import useImage from 'use-image';
 import Robot from './Robot'
 import GetPoints from "../../HermiteCurveGenerator/Generator";
 import Point from "../../HermiteCurveGenerator/Point"
+import Constants from "../Constants";
 const fieldImgURL = 'https://i.postimg.cc/XqTK09xY/field.png';
-const fieldScale = 1.2;
-const xOffset = 0;
-const yOffset = 0;
-
-const FieldImage = () => {
-    const [image] = useImage(fieldImgURL);
-    return <Image image={image} scaleX={fieldScale} scaleY={fieldScale}/>;
-};
+const fieldScale = 1.23;
+let yOffset = 0;
 
 export default class Field extends React.Component {
     constructor(props) {
@@ -28,7 +23,7 @@ export default class Field extends React.Component {
     }
 
     handleClick = (e) => {
-        const eventX = e.evt.offsetX - xOffset;
+        const eventX = e.evt.offsetX;
         const eventY =  e.evt.offsetY - yOffset;
         if (this.state.drawingMode || this.state.knots.length === 0) {
             this.setState(({
@@ -46,7 +41,7 @@ export default class Field extends React.Component {
 
     handleMouseMove = (e) => {
         if (this.state.showPreview) {
-            const eventX = e.evt.offsetX - xOffset;
+            const eventX = e.evt.offsetX;
             const eventY =  e.evt.offsetY - yOffset;
             if (this.state.knots.length === 0) {
                 this.setState({
@@ -121,7 +116,8 @@ export default class Field extends React.Component {
     render() {
         return (
             <div className={"field-area"}>
-                <Stage width={(4.8 * window.innerWidth) / 8} height={window.innerHeight}
+                <Stage width={Constants.FIELD_DIMENSIONS * fieldScale} height={Constants.FIELD_DIMENSIONS * fieldScale}
+                       y={(window.innerHeight - (Constants.FIELD_DIMENSIONS * fieldScale)) / 2}
                        onContentClick={this.handleClick}
                        onContentMouseMove={this.handleMouseMove}
                 >
@@ -169,3 +165,8 @@ export default class Field extends React.Component {
         );
     }
 }
+
+const FieldImage = () => {
+    const [image] = useImage(fieldImgURL);
+    return <KonvaImage image={image} scaleX={fieldScale} scaleY={fieldScale}/>;
+};

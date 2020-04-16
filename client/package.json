@@ -12,6 +12,7 @@
     "materialize-css": "^1.0.0-rc.2",
     "ml-matrix": "^6.4.1",
     "react": "^16.13.0",
+    "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.0",
     "react-easy-panzoom": "^0.4.4",
     "react-konva": "^16.12.0-0",
