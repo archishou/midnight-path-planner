@@ -5,8 +5,8 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 // fake data generator
 const getItems = count =>
     Array.from({ length: count }, (v, k) => k).map(k => ({
-        id: `item-${k}`,
-        content: `item ${k}`
+        id: `knot-${k}`,
+        content: `Knot ${k}`
     }));
 
 // a little function to help us with reordering the result
@@ -24,7 +24,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: "none",
     padding: grid * 2,
-    margin: `0 0 ${grid}px 0`,
+    margin: `0 0 ${8}px 0`,
 
     // change background colour if dragging
     background: isDragging ? "lightgreen" : "grey",
@@ -35,8 +35,8 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? "lightblue" : "lightgrey",
-    padding: grid,
-    width: 250
+    width: "20vw",
+    float: "left"
 });
 
 export default class Editor extends Component {

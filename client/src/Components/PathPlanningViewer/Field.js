@@ -1,12 +1,13 @@
 import React from 'react';
 import {Layer, Stage, Line, Image as KonvaImage} from 'react-konva';
 import useImage from 'use-image';
+import './Field.css'
 import Robot from './Robot'
 import GetPoints from "../../HermiteCurveGenerator/Generator";
 import Point from "../../HermiteCurveGenerator/Point"
 import Constants from "../Constants";
 const fieldImgURL = 'https://i.postimg.cc/XqTK09xY/field.png';
-const fieldScale = 1.23;
+const fieldDim = Constants.FIELD_DIMENSIONS * Constants.FIELD_SCALE;
 let yOffset = 0;
 
 export default class Field extends React.Component {
@@ -115,9 +116,9 @@ export default class Field extends React.Component {
 
     render() {
         return (
-            <div className={"field-area"}>
-                <Stage width={Constants.FIELD_DIMENSIONS * fieldScale} height={Constants.FIELD_DIMENSIONS * fieldScale}
-                       y={(window.innerHeight - (Constants.FIELD_DIMENSIONS * fieldScale)) / 2}
+            <div className={"field"}>
+                <Stage width={fieldDim} height={fieldDim}
+                       y={(window.innerHeight - (fieldDim)) / 2}
                        onContentClick={this.handleClick}
                        onContentMouseMove={this.handleMouseMove}
                 >
@@ -168,5 +169,5 @@ export default class Field extends React.Component {
 
 const FieldImage = () => {
     const [image] = useImage(fieldImgURL);
-    return <KonvaImage image={image} scaleX={fieldScale} scaleY={fieldScale}/>;
+    return <KonvaImage image={image} scaleX={Constants.FIELD_SCALE} scaleY={Constants.FIELD_SCALE}/>;
 };

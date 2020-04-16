@@ -1,5 +1,4 @@
-.field-area {
-    display: inline-block;
-    vertical-align:top;
-    width: 87.5vw;
+.field {
+    float: left;
+    padding-left: 25vw;
 }

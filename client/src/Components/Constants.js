@@ -2,6 +2,7 @@ const Constants = {
     ROBOT_SIZE: 75,
     PATH_RESOLUTION: 0.01,
     FIELD_DIMENSIONS: 800,
+    FIELD_SCALE: 1.23,
 };
 
 export default Constants
