@@ -90,7 +90,10 @@ export default class Login extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <a className={"waves-effect waves-black push-s4 btn-large white " + this.state.loginDisabled + " col s4 push-s4"} style={loginStyle} onClick={this.handleSubmit}>Login</a>
+                        <a className={"waves-effect waves-black btn-large white " + this.state.loginDisabled + " col s4 offset-s4"} style={loginStyle} onClick={this.handleSubmit}>Login</a>
+                    </div>
+                    <div className="row">
+                        <a className={"waves-effect waves-black btn-large grey col s4 offset-s4"} style={loginStyle}>Create New Account</a>
                     </div>
             </div>
         );
