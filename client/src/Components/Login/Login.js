@@ -2,60 +2,63 @@ import React, { Component } from "react";
 import { Form,Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "./Login.css";
 import Bootstrap from "react-bootstrap";
+const logoUrl = 'https://i.postimg.cc/WbzwhV5B/midnight-logo.png';
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            email: "",
-            password: ""
+            username: '',
+            password: '',
+            robotName: ''
         };
     }
-
-    validateForm() {
-        return this.state.email.length > 0 && this.state.password.length > 0;
-    }
-
-    handleChange = event => {
+    handleUsernameChange = (event) => {
         this.setState({
-            [event.target.id]: event.target.value
+            username: event.target.value
         });
-    }
+    };
 
-    handleSubmit = event => {
+    handlePasswordChange = (event) => {
+        this.setState({
+            password: event.target.value
+        });
+    };
+
+    handleRobotNameChange = (event) => {
+        this.setState({
+            robotName: event.target.value
+        });
+    };
+
+    handleSubmit = (event) => {
+        alert('User ' + this.state.username + '\nPassword ' + this.state.password + '\nRobot Name ' + this.state.robotName);
         event.preventDefault();
-    }
-
+    };
     render() {
         return (
-            <div className="Login">
+            <div className="login">
+                <img src={logoUrl} alt="Logo"/>
                 <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="email" bsSize="large">
-                        <FormLabel>Email</FormLabel>
-                        <FormControl
-                            autoFocus
-                            type="email"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-                    <FormGroup controlId="password" bsSize="large">
-                        <FormLabel>Password</FormLabel>
-                        <FormControl
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            type="password"
-                        />
-                    </FormGroup>
-                    <Button
-                        block
-                        bsSize="large"
-                        disabled={!this.validateForm()}
-                        type="submit"
-                    >
-                        Login
-                    </Button>
+                    <label>
+                        Username:
+                        <br/>
+                        <input type="text" value={this.state.value} onChange={this.handleUsernameChange} />
+                    </label>
+                    <br/>
+                    <label>
+                        Password:
+                        <br/>
+                        <input type="password" value={this.state.value} onChange={this.handlePasswordChange} />
+                    </label>
+                    <br/>
+                    <label>
+                        Robot Name:
+                        <br/>
+                        <input type="text" value={this.state.value} onChange={this.handleRobotNameChange} />
+                    </label>
+                    <br/>
+                    <input type="submit" value="Submit" />
                 </form>
             </div>
         );

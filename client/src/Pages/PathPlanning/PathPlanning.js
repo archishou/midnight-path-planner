@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Login.css";
-import Field from "../Components/PathPlanningViewer/Field";
-import Editor from "../Components/PathPlanningEditor/Editor";
+import Field from "../../Components/PathPlanningViewer/Field";
+import Editor from "../../Components/PathPlanningEditor/Editor";
 
 export default class PathPlanning extends Component {
 
