@@ -12,12 +12,7 @@ const loginStyle = {
 
 const inputStyle = {
     color: "white"
-}
-
-const mainDiv = {
-    backgroundColor: "black",
-    width: "100vw"
-}
+};
 
 export default class Login extends Component {
     constructor(props) {
@@ -76,7 +71,6 @@ export default class Login extends Component {
         return (
             <div className="login">
                 <img className={"logo"} src={logoUrl} alt="Logo"/>
-                <form onSubmit={this.handleSubmit}>
                     <div className="row">
                         <div className="input-field col s4 push-s4">
                             <input id="username" type="text" className="validate" style={inputStyle} value={this.state.username} onChange={this.handleUsernameChange}/>
@@ -96,9 +90,8 @@ export default class Login extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <a className={"waves-effect waves-black push-s4 btn-large white " + this.state.loginDisabled + " col s4 push-s4"} style={loginStyle}>Login</a>
+                        <a className={"waves-effect waves-black push-s4 btn-large white " + this.state.loginDisabled + " col s4 push-s4"} style={loginStyle} onClick={this.handleSubmit}>Login</a>
                     </div>
-                </form>
             </div>
         );
     }
