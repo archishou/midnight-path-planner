@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Stage, Layer, Rect } from 'react-konva';
+import React  from 'react';
+import { Rect } from 'react-konva';
 import Constants from "../Constants";
 import sleep from '../Utils'
 class Robot extends React.Component {

@@ -1,4 +1,4 @@
-import {inverse, Matrix, solve} from "ml-matrix";
+import {Matrix, solve} from "ml-matrix";
 import Point from './Point'
 import Segment from './Segment'
 import Constants from "../Components/Constants";
