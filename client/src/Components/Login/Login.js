@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Form,Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "./Login.css";
 import Bootstrap from "react-bootstrap";
+import M from "materialize-css";
+
+
 const logoUrl = 'https://i.postimg.cc/WbzwhV5B/midnight-logo.png';
 
 export default class Login extends Component {
@@ -13,6 +16,11 @@ export default class Login extends Component {
             robotName: ''
         };
     }
+    componentDidMount() {
+        // Auto initialize all the things!
+        M.AutoInit();
+    }
+
     handleUsernameChange = (event) => {
         this.setState({
             username: event.target.value
@@ -35,30 +43,20 @@ export default class Login extends Component {
         alert('User ' + this.state.username + '\nPassword ' + this.state.password + '\nRobot Name ' + this.state.robotName);
         event.preventDefault();
     };
+
     render() {
         return (
             <div className="login">
-                <img src={logoUrl} alt="Logo"/>
+                <img className={"logo"} src={logoUrl} alt="Logo"/>
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Username:
-                        <br/>
-                        <input type="text" value={this.state.value} onChange={this.handleUsernameChange} />
-                    </label>
-                    <br/>
-                    <label>
-                        Password:
-                        <br/>
-                        <input type="password" value={this.state.value} onChange={this.handlePasswordChange} />
-                    </label>
-                    <br/>
-                    <label>
-                        Robot Name:
-                        <br/>
-                        <input type="text" value={this.state.value} onChange={this.handleRobotNameChange} />
-                    </label>
-                    <br/>
-                    <input type="submit" value="Submit" />
+                    <div className="input-field">
+                        <input id="username" type="text" className="validate" value={this.state.username} onChange={this.handleUsernameChange}/>
+                        <label htmlFor="username">Username</label>
+                        <input id="password" type="password" className="validate" value={this.state.password} onChange={this.handlePasswordChange}/>
+                        <label htmlFor="password">Password</label>
+                        <input id="robot-name" type="text" className="validate" value={this.state.robotName} onChange={this.handleRobotNameChange}/>
+                        <label htmlFor="robot-name">Robot Name</label>
+                    </div>
                 </form>
             </div>
         );
