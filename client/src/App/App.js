@@ -6,11 +6,12 @@ import Login from "../Components/Login/Login";
 /*<Field/>
         <Editor/>*/
 import { BrowserRouter as Router } from 'react-router-dom';
+import AppRouter from "../Router/AppRouter";
 
 function App() {
 
   return (
-      <Login />
+      <AppRouter/>
   );
 }
 
