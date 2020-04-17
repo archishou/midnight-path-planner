@@ -9,14 +9,25 @@
     margin-left: auto;
     margin-right: auto;
 }
-.input-label {
 
+input-field input[type=text] + label, input[type=password] + label, .materialize-textarea:focus:not([readonly]) + label {
+    color: gray !important;
 }
 
-.input-area {
-    color: white;
+.input-field input[type=text], input[type=password], .materialize-textarea:focus:not([readonly]) {
+    border-bottom: 2px solid gray !important;
+    box-shadow: 0 2px 0 0 gray !important;
+}
+
+.input-field input[type=text]:focus + label, input[type=password]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
+    color: white !important;
+}
+
+.input-field input[type=text]:focus, input[type=password]:focus, .materialize-textarea:focus:not([readonly]) {
+    border-bottom: 2px solid white !important;
+    box-shadow: 0 2px 0 0 white !important;
 }
 
 .login-button {
-
+    color: white;
 }
