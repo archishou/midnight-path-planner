@@ -1,27 +1,17 @@
 {
-  "name": "midnight-path-planner",
+  "name": "react-router-layout-guide",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "draw-shape-reactjs": "^1.0.2",
-    "immutable": "^4.0.0-rc.12",
-    "konva": "^4.2.0",
-    "materialize-css": "^1.0.0-rc.2",
-    "ml-matrix": "^6.4.1",
-    "react": "^16.13.0",
+    "antd": "^3.25.2",
+    "history": "^4.10.1",
+    "konva": "^4.2.2",
+    "react": "^16.12.0",
     "react-beautiful-dnd": "^13.0.0",
-    "react-bootstrap": "^1.0.0",
-    "react-dom": "^16.13.0",
-    "react-easy-panzoom": "^0.4.4",
-    "react-konva": "^16.12.0-0",
-    "react-materialize": "^3.8.3",
-    "react-pan-and-zoom-hoc": "^2.1.8",
+    "react-dom": "^16.12.0",
+    "react-konva": "^16.13.0-0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.0",
-    "react-zoom-pan-pinch": "^1.6.1",
+    "react-scripts": "3.2.0",
     "use-image": "^1.0.5"
   },
   "scripts": {
@@ -44,5 +34,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "less": "^3.11.1"
   }
 }
