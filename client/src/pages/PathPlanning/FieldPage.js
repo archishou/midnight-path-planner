@@ -6,7 +6,7 @@ import './FieldPage.css'
 export default class FieldPage extends Component {
     render() {
         return (
-            <div className={"full-field-container"}>
+            <div style={{float: "left"}}>
                 <Field/>
                 <Editor/>
             </div>

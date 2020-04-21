@@ -8,7 +8,7 @@ import Point from "../HermiteCurveGenerator/Point"
 import Constants from "../Constants";
 const fieldImgURL = 'https://i.postimg.cc/XqTK09xY/field.png';
 const fieldDim = Constants.FIELD_DIMENSIONS * Constants.FIELD_SCALE;
-let yOffset = Constants.HEADER_HEIGHT;
+let yOffset = 0;
 
 export default class Field extends React.Component {
     constructor(props) {

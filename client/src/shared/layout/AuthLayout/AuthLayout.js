@@ -3,6 +3,7 @@ import { message, Row, Layout, Button, Dropdown, Icon, Menu } from "antd";
 import routes from "../../../routes";
 import './AuthLayout.css'
 import SideMenu from "./SideMenu";
+import Constants from "../../../pages/PathPlanning/Constants";
 
 const { Header, Content } = Layout;
 
@@ -41,7 +42,6 @@ class AuthLayout extends React.Component {
             justify="end"
             style={{ height: "100%" }}
           >
-            {/* Dropdown with option to logout */}
             <Dropdown
               overlay={
                 <Menu>
@@ -59,11 +59,9 @@ class AuthLayout extends React.Component {
             </Dropdown>
           </Row>
         </Header>
-
-          <SideMenu/>
-
-        <Content style={{ padding: "0 0px", marginTop: 0, height: "100vh" }}>
-          {this.props.children}
+        <SideMenu/>
+        <Content style={{height: "100vh", margin: "0 auto", marginTop: Constants.HEADER_HEIGHT}}>
+            {this.props.children}
         </Content>
       </Layout>
     );
