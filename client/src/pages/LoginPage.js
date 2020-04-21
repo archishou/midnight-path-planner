@@ -63,7 +63,12 @@ class LoginPage extends React.Component {
                     layout="vertical"
                     onChange={this.handleChange}
                     >
-                    <Form.Item label="Email" validateStatus={this.state.emailValidation} help={this.state.emailHelp} onChange={this.onEmailChange}>
+                    <Form.Item label="Email" rules={[
+                        {
+                            required: true,
+                            message: 'Please input your username!',
+                        },
+                    ]}>
                         <Input prefix={<UserOutlined className="site-form-item-icon" />} size="large" placeholder="john@example.com" />
                     </Form.Item>
                     <Form.Item label="Password">
