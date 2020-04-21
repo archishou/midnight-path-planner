@@ -10,10 +10,6 @@ import Constants from "../../../pages/PathPlanning/Constants";
 import './AuthLayout.css'
 
 export default class SideMenu extends React.Component {
-    state = {
-        collapsed: false,
-    };
-
     render() {
         return (
             <div style={{ width: 256, marginTop: Constants.HEADER_HEIGHT }} className={"side-menu"}>
@@ -22,7 +18,6 @@ export default class SideMenu extends React.Component {
                     defaultOpenKeys={['sub1']}
                     mode="inline"
                     theme="dark"
-                    inlineCollapsed={this.state.collapsed}
                 >
                     <Menu.Item key="1">
                         <PieChartOutlined />
