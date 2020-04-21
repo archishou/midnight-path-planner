@@ -37,7 +37,7 @@ class AuthLayout extends React.Component {
             <Content style={{height: window.innerHeight - Constants.HEADER_HEIGHT, margin: "0 auto"}}>
                 {this.props.children}
             </Content>
-      </Layout>
+        </Layout>
     );
     }
 }
