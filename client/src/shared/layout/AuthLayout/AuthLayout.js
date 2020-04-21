@@ -19,8 +19,8 @@ class AuthLayout extends React.Component {
     }
 
     onLogout = () => {
-    localStorage.clear();
-    this.props.history.push(routes.login);
+        localStorage.clear();
+        this.props.history.push(routes.login);
     };
 
     render() {
@@ -31,7 +31,7 @@ class AuthLayout extends React.Component {
                 <Menu.Item key="graph">Graphing Tool</Menu.Item>
                 <Menu.Item key="command">Command Line Tools</Menu.Item>
                 <SubMenu title={<>user@gmail.com</>}>
-                    <Menu.Item key="setting:3" onClick={this.onLogout}>Logout</Menu.Item>
+                    <Menu.Item key="logout" onClick={this.onLogout}>Logout</Menu.Item>
                 </SubMenu>
             </Menu>
             <Content style={{height: window.innerHeight - Constants.HEADER_HEIGHT, margin: "0 auto"}}>
