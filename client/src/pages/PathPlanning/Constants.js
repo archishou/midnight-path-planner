@@ -3,7 +3,7 @@ const Constants = {
     PATH_RESOLUTION: 0.01,
     FIELD_DIMENSIONS: 800,
     FIELD_SCALE: 1.15,
-    HEADER_HEIGHT: 64,
+    HEADER_HEIGHT: 46,
 };
 
 export default Constants
