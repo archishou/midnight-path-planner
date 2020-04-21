@@ -1,10 +1,11 @@
 import React from "react";
-import { message, Row, Layout, Button, Dropdown, Icon, Menu } from "antd";
+import { message, Row, Layout, Button, Dropdown, Icon, Menu, Col } from "antd";
 import routes from "../../../routes";
 import './AuthLayout.css'
-import SideMenu from "./SideMenu";
 import Constants from "../../../pages/PathPlanning/Constants";
-
+const MenuItemWidth = 3;
+const MenuItemCount = 3;
+const LoginPadding = 24 - ((MenuItemCount + 1) * MenuItemWidth);
 const { Header, Content } = Layout;
 
 class AuthLayout extends React.Component {
@@ -39,28 +40,37 @@ class AuthLayout extends React.Component {
           <Row
             type="flex"
             align="middle"
-            justify="end"
             style={{ height: "100%" }}
           >
-            <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.Item key="1" onClick={this.onLogout}>
-                    <Icon type="logout" />
-                    Logout
-                  </Menu.Item>
-                </Menu>
-              }
-              trigger={["click"]}
-            >
-              <Button ghost className="primary-btn">
-                user@gmail.com <Icon type="down" />
-              </Button>
-            </Dropdown>
+            <Col className="gutter-row" span={MenuItemWidth}>
+               <Button ghost className="primary-btn" justify="end">Path Planning Tools</Button>
+            </Col>
+            <Col className="gutter-row" span={MenuItemWidth}>
+                <Button ghost className="primary-btn" justify="end">Graphing Tool</Button>
+            </Col>
+            <Col className="gutter-row" span={MenuItemWidth}>
+                <Button ghost className="primary-btn" justify="end">Command Line Tool</Button>
+            </Col>
+            <Col className="gutter-row" span={MenuItemWidth} offset={LoginPadding}>
+                <Dropdown
+                    overlay={
+                        <Menu>
+                            <Menu.Item key="1" onClick={this.onLogout}>
+                                <Icon type="logout" />
+                                 Logout
+                            </Menu.Item>
+                        </Menu>
+                    }
+                    trigger={["click"]}
+                >
+                    <Button ghost className="primary-btn">
+                        user@gmail.com <Icon type="down" />
+                    </Button>
+                </Dropdown>
+            </Col>
           </Row>
         </Header>
-        <SideMenu/>
-        <Content style={{height: "100vh", margin: "0 auto", marginTop: Constants.HEADER_HEIGHT}}>
+        <Content style={{height: window.innerHeight - Constants.HEADER_HEIGHT, margin: "0 auto", marginTop: Constants.HEADER_HEIGHT}}>
             {this.props.children}
         </Content>
       </Layout>
