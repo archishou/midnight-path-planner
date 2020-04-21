@@ -5,13 +5,13 @@ import { createBrowserHistory } from "history";
 // Layouts & Route
 import routes from "./routes";
 import PublicLayout from "./shared/layout/PublicLayout";
-import AuthLayout from "./shared/layout/AuthLayout";
+import AuthLayout from "./shared/layout/AuthLayout/AuthLayout";
 
 // Public pages
 import LoginPage from "./pages/LoginPage";
 
 // Authenticated pages
-import Field from "./pages/PathPlanning/PathPlanningViewer/Field";
+import FieldPage from "./pages/PathPlanning/FieldPage";
 // Uncomment below to use a custom 404 page
 // import NotFoundPage from "./pages/NotFoundPage";
 
@@ -27,7 +27,7 @@ const pages = [
   {
     exact: false,
     path: routes.field,
-    component: Field,
+    component: FieldPage,
     layout: AuthLayout
   }
 ];
