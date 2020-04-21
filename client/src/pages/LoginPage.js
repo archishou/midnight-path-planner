@@ -1,18 +1,13 @@
 import React from "react";
-import {Card, Form, Input, Button} from "antd";
+import { Card, Form, Input, Button } from "antd";
 import routes from "../routes";
 import { UserOutlined, LockOutlined, RobotOutlined } from '@ant-design/icons';
 
-class LoginPage extends React.Component {
+export default class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            emailValidation: "",
-            emailHelp: "",
-            passwordValidation: "",
-            passwordHelp: "",
-            passwordValue: '',
-            emailValue: '',
+            value: ''
         }
     }
 
@@ -20,24 +15,6 @@ class LoginPage extends React.Component {
         // Set token into localstorage
         localStorage.setItem("token", "I am now logged in");
         this.props.history.push(routes.field);
-    };
-
-    onEmailChange = ({ target: { value } }) => {
-        this.setState({
-            emailValue: value,
-        });
-        if (this.state.emailValue === '') {
-            this.setState({
-                emailValidation: 'error',
-                emailHelp: 'Email is required'
-            })
-        } else {
-            this.setState({
-                emailValidation: '',
-                emailHelp: ''
-            })
-        }
-        console.log("Email Value: " + this.state.emailValue)
     };
 
     onPasswordChange = ({ target: { value } }) => {
@@ -48,9 +25,8 @@ class LoginPage extends React.Component {
     render() {
         return (
             <Card
-                bordered={false}
                 style={{
-                    border: "1px solid #282828",
+                    border: "10px solid #282828",
                     boxShadow: "0px 15px 20px 5px #0000001a",
                     width: 500,
                 }}
@@ -61,7 +37,6 @@ class LoginPage extends React.Component {
                     colon={false}
                     onSubmit={this.handleSubmit}
                     layout="vertical"
-                    onChange={this.handleChange}
                     >
                     <Form.Item label="Email" rules={[
                         {
@@ -90,6 +65,5 @@ class LoginPage extends React.Component {
             </Card>
         );
     }
-}
 
-export default Form.create({name: "Login"})(LoginPage);
+}
