@@ -35,7 +35,6 @@ export default class LoginPage extends React.Component {
                 <Form
                     hideRequiredMark
                     colon={false}
-                    onSubmit={this.handleSubmit}
                     layout="vertical"
                     >
                     <Form.Item label="Email" rules={[
@@ -58,7 +57,7 @@ export default class LoginPage extends React.Component {
                         <Input size="large" placeholder="Robot One" prefix={<RobotOutlined className="site-form-item-icon" />} />
                     </Form.Item>
                     <Form.Item>
-                        <Button block htmlType="submit" size="large">Login</Button>
+                        <Button block htmlType="submit" size="large" onClick={this.handleSubmit}>Login</Button>
                         Or <a href="">register now!</a>
                     </Form.Item>
                 </Form>
